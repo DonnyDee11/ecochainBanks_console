@@ -3,10 +3,10 @@
       <v-table class="scrollable-table" style="width: 100%">
         <thead>
           <tr>
-            <td colspan="3" class="text-left text-no-wrap">
+            <td colspan="2" class="text-left text-no-wrap">
               Complete the sub-sections below by inputting the scoring achieved for each metric
             </td>
-            <td colspan="2" class="text-left">
+            <td colspan="1" class="text-left">
               <input type="radio" v-model="allApplicable" value="true" />
               Mark entire category as not applicable
             </td>
@@ -15,8 +15,8 @@
           <tr>
             <th class="text-left">Sub-section</th>
             <th class="text-left">Metric</th>
-            <th class="text-left">Scoring</th>
-            <th class="text-left">Applicable</th>
+            <!-- <th class="text-left">Scoring</th>
+            <th class="text-left">Applicable</th> -->
             <th class="text-left">Scoring achieved</th>
           </tr>
         </thead>
@@ -25,23 +25,22 @@
           <tr v-for="(item, index) in metrics" :key="item.name">
             <td>{{ item.name }}</td>
             <td>{{ item.metric }}</td>
-            <td>
+            <!-- <td>
               <a href="https://www.weforum.org/stakeholdercapitalism/our-metrics" target="_blank">
                 <i class="ti-eye"></i> View details and rationale
               </a>
             </td>
             <td>
               <v-switch v-model="item.isApplicable" @change="handleSwitchChange(item, index)" color="#219653"></v-switch>
-            </td>
+            </td> -->
             <td>
-              <component 
-                :is="getInputComponent(item.metric)" 
-                v-model="item.scoringAchieved" 
-                :disabled="!item.isApplicable"
-                variant="outlined"
-                style="margin-top: 16px; width: 100%;"
-                :prepend-inner-icon="prependIcon(item.metric)"
-              ></component> 
+              <v-text-field 
+              v-model="item.scoringAchieved" 
+              :disabled="!item.isApplicable" 
+              variant="outlined" 
+              style="margin-top: 16px; width: 100%;"
+              :prepend-inner-icon="prependIcon(index)"
+            ></v-text-field> 
             </td>
           </tr>
         </tbody>
@@ -186,12 +185,27 @@
         ],
     }
 },
+// computed: {
+//     sectionStatus() {
+//       if (this.metrics.every(item => item.isApplicable)) {
+//         return 'Complete';
+//       } else if (this.metrics.every(item => !item.isApplicable)) {
+//         return 'Not Applicable';
+//       } else {
+//         return 'Partial';
+//       }
+//     }
+//   },
+
 computed: {
     sectionStatus() {
-      if (this.metrics.every(item => item.isApplicable)) {
+      // Check if all text fields have some value (not empty strings)
+      const allFieldsFilled = this.metrics.every(item => item.scoringAchieved.trim() !== '');
+
+      if (allFieldsFilled) {
         return 'Complete';
-      } else if (this.metrics.every(item => !item.isApplicable)) {
-        return 'Not Applicable';
+      } else if (this.metrics.every(item => item.scoringAchieved.trim() === '')) {
+        return 'Not Started'; 
       } else {
         return 'Partial';
       }
@@ -259,3 +273,39 @@ computed: {
   }
 }
 </script>
+
+<style scoped>
+.scrollable-table {
+  max-height: 55vh; 
+  overflow: auto;
+}
+
+/* Style for the table header */
+th {
+  background-color: #f0f0f0; /* Light gray background */
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+}
+
+/* Style for table rows */
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternate row color for better readability */
+}
+
+/* Style for table cells */
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd; /* Light gray border between rows */
+}
+
+/* Style for the "View details and rationale" link */
+a {
+  color: #219653; /* Match your button color */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>

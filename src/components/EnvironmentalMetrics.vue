@@ -3,10 +3,10 @@
     <v-table class="scrollable-table" style="width: 100%">
       <thead>
         <tr>
-          <td colspan="3" class="text-left text-no-wrap">
+          <td colspan="2" class="text-left text-no-wrap">
             Complete the sub-sections below by inputting the scoring achieved for each metric
           </td>
-          <td colspan="2" class="text-left">
+          <td colspan="1" class="text-left">
             <input type="radio" v-model="allApplicable" value="true" />
             Mark entire category as not applicable
           </td>
@@ -15,8 +15,8 @@
         <tr>
           <th class="text-left">Sub-section</th>
           <th class="text-left">Metric</th>
-          <th class="text-left">Scoring</th>
-          <th class="text-left">Applicable</th>
+          <!-- <th class="text-left">Scoring</th>
+          <th class="text-left">Applicable</th> -->
           <th class="text-left">Scoring achieved</th>
         </tr>
       </thead>
@@ -25,14 +25,14 @@
         <tr v-for="(item, index) in metrics" :key="item.name">
           <td>{{ item.name }}</td>
           <td>{{ item.metric }}</td>
-          <td>
+          <!-- <td>
             <a href="https://www.weforum.org/stakeholdercapitalism/our-metrics" target="_blank">
               <i class="ti-eye"></i> View details and rationale
             </a>
           </td>
           <td>
             <v-switch v-model="item.isApplicable" @change="handleSwitchChange(item, index)" color="#219653"></v-switch>
-          </td>
+          </td> -->
           <td>
             <v-text-field 
               v-model="item.scoringAchieved" 
@@ -89,17 +89,33 @@ export default {
     }
   },
 
+  // computed: {
+  //     sectionStatus() {
+  //   if (this.metrics.every(item => item.isApplicable)) {
+  //     return 'Complete';
+  //   } else if (this.metrics.every(item => !item.isApplicable)) {
+  //     return 'Not Applicable';
+  //   } else {
+  //     return 'Partial';
+  //   }
+  // }
+  // },
+
   computed: {
-      sectionStatus() {
-    if (this.metrics.every(item => item.isApplicable)) {
-      return 'Complete';
-    } else if (this.metrics.every(item => !item.isApplicable)) {
-      return 'Not Applicable';
-    } else {
-      return 'Partial';
+    sectionStatus() {
+      // Check if all text fields have some value (not empty strings)
+      const allFieldsFilled = this.metrics.every(item => item.scoringAchieved.trim() !== '');
+
+      if (allFieldsFilled) {
+        return 'Complete';
+      } else if (this.metrics.every(item => item.scoringAchieved.trim() === '')) {
+        return 'Not Started'; 
+      } else {
+        return 'Partial';
+      }
     }
-  }
   },
+
 
   methods: {
     prependIcon(index) {
@@ -139,7 +155,7 @@ export default {
 
 <style scoped>
 .scrollable-table {
-  max-height: 400px; /* Adjust this value as needed */
+  max-height: 55vh; /* Adjust this value as needed */
   overflow: auto;
 }
 
