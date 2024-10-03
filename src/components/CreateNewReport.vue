@@ -7,30 +7,18 @@
       back-button-text="Back to previous section" next-button-text="Next section" finish-button-text="Submit">
 
       <div class="form-wizard-container">
-        <TabContent title="Submission Info" icon="ti-wallet" text-center>
+        <TabContent title="Submission Info" icon="ti-info-alt" text-center>
           <BackgroundInfo @updateData="updateData" />
         </TabContent>
         <TabContent title="Social" icon="ti-user">
-            <SocialMetricsPage ref="socialMetricsPage" @updateSocialMetrics="updateSocialMetrics" />
+            <SocialMetricsPage ref="SocialMetricsPage" @updateSocialMetrics="updateSocialMetrics" />
         </TabContent>
         <TabContent title="Environmental" icon="ti-world">
-            <EnvironmentalMetricsPage ref="environmentalMetricsPage" @updateEnvironmentalMetrics="updateEnvironmentalMetrics" />
+            <EnvironmentalMetricsPage ref="EnvironmentalMetricsPage" @updateEnvironmentalMetrics="updateEnvironmentalMetrics" />
           </TabContent>
           <TabContent title="Governance" icon="ti-shield">
-            <GovernanceMetricsPage ref="governanceMetricsPage" @updateGovernanceMetrics="updateGovernanceMetrics" />
+            <GovernanceMetricsPage ref="GovernanceMetricsPage" @updateGovernanceMetrics="updateGovernanceMetrics" />
           </TabContent>
-        <!-- <TabContent title="People" icon="ti-user">
-          <PeoplePage ref="PeoplePage" @updateMetrics="handleMetricsUpdate" />
-        </TabContent>
-        <TabContent title="Governance" icon="ti-shield">
-          <GovernancePage ref="GovernancePage" @updateGovernanceMetrics="updateGovernanceMetrics" />
-        </TabContent>
-        <TabContent title="Planet" icon="ti-world">
-          <PlanetPage ref="PlanetPage" @updatePlanetMetrics="updatePlanetMetrics" />
-        </TabContent>
-        <TabContent title="Prosperity" icon="ti-wallet">
-          <ProsperityPage ref="ProsperityPage" @updateProsperityMetrics="updateProsperityMetrics" />
-        </TabContent> -->
         <TabContent title="Review and Submit" icon="ti-check-box">
           <table style="width: 100%; border-collapse: collapse;">
             <thead>
@@ -86,42 +74,6 @@
                         </td>
                       </tr>
                     </tbody>
-                    <!-- <tbody>
-                      <tr>
-                        <td class="review-cell">Sections included in Submission</td>
-                        <td class="review-cell"></td>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr>
-                        <td class="review-cell">People</td>
-                        <td class="review-cell">
-                          <div class="status-cell" :style="getCellStyle(getSectionStatus('PeoplePage'))">
-                            {{ getSectionStatus('PeoplePage') }}</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="review-cell">Planet</td>
-                        <td class="review-cell">
-                          <div class="status-cell" :style="getCellStyle(getSectionStatus('PlanetPage'))">{{
-                            getSectionStatus('PlanetPage') }}</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="review-cell">Prosperity</td>
-                        <td class="review-cell">
-                          <div class="status-cell" :style="getCellStyle(getSectionStatus('ProsperityPage'))">{{
-                            getSectionStatus('ProsperityPage') }}</div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="review-cell">Governance</td>
-                        <td class="review-cell">
-                          <div class="status-cell" :style="getCellStyle(getSectionStatus('GovernancePage'))">{{
-                            getSectionStatus('GovernancePage') }}</div>
-                        </td>
-                      </tr>
-                    </tbody> -->
                   </table>
                 </td>
               </tr>
@@ -207,30 +159,10 @@ export default {
       socialMetrics: [], 
       environmentalMetrics: [],
       governanceMetrics: [],
-      // diversityInclusion: '',
-      // payEquality: '',
-      // wageLevel: '',
-      // healthSafetyLevel: '',
-      // dialogVisible: false,
-      // checkbox: false,
       firstName: '',
       lastName: '',
       startDate: '',
       endDate: '',
-      // ethicalBehaviorTraining: '',
-      // previousYearCorruptionIncidents: '',
-      // currentYearCorruptionIncidents: '',
-      // greenhouseGasEmissions: '',
-      // tcfdImplementation: '',
-      // waterConsumptionInStressedAreas: '',
-      // landUseEcologicalSensitivity: '',
-      // totalTaxPaid: '',
-      // newEmployees: '',
-      // employeeTurnover: '',
-      // economicContributionMetric: '',
-      // totalRnDExpenses: '',
-      // totalCapExDepreciation: '',
-      // shareBuybacksDividends: '',
       loading: false
 
 
@@ -289,354 +221,293 @@ export default {
       event.preventDefault();
       this.onComplete();
     },
+
     updateSocialMetrics(metrics) {
-      // Update properties based on the new social metrics
-      this.customerComplaints = this.findMetricValue(metrics, 'Customer Complaints');
-      this.customerSatisfactionScore = this.findMetricValue(metrics, 'Customer Satisfaction Score');
+    this.socialMetrics = metrics.map(metric => ({
+      metric: metric.metric,
+      scoringAchieved: metric.scoringAchieved
+    }));
 
-      // Human Capital Development
-      this.permanentEmployeesMale = this.findMetricValue(metrics, 'Permanent Employees (Male)');
-      this.permanentEmployeesFemale = this.findMetricValue(metrics, 'Permanent Employees (Female)');
-      this.temporaryEmployees = this.findMetricValue(metrics, 'Temporary Employees');
-      this.fullTimeEmployeesMale = this.findMetricValue(metrics, 'Full-Time Employees (Male)');
-      this.fullTimeEmployeesFemale = this.findMetricValue(metrics, 'Full-Time Employees (Female)');
-      this.partTimeEmployeesMale = this.findMetricValue(metrics, 'Part-Time Employees (Male)');
-      this.partTimeEmployeesFemale  = this.findMetricValue(metrics, 'Part-Time Employees (Female)');
-      this.employeeTurnoverRate = this.findMetricValue(metrics, 'Employee Turnover Rate');
-      this.trainingAndDevelopmentSpendPerEmployee = this.findMetricValue(metrics, 'Training and Development Spend per Employee');
-      this.lostTimeInjuryFrequencyRate = this.findMetricValue(metrics, 'Lost Time Injury Frequency Rate');
-      this.employeeEngagementScore = this.findMetricValue(metrics, 'Employee Engagement Score');
-      this.genderPayGap = this.findMetricValue(metrics, 'Gender Pay Gap');
+    console.log('Social metrics updated:', this.socialMetrics); // Log the updated array
+  },
 
-      // Training, Bursaries & Learnerships
-      this.totalTrainingSpend = this.findMetricValue(metrics, 'Total Training Spend');
-      this.totalTrainingSpendBasicPayroll = this.findMetricValue(metrics, 'Total Training Spend as % of Basic Payroll');
-      this.trainingSpendPerEmployee = this.findMetricValue(metrics, 'Training Spend per Employee');
-      this.trainingBeneficiaries = this.findMetricValue(metrics, 'Number of Training Beneficiaries');
-      this.averageTrainingHours = this.findMetricValue(metrics, 'Average Training Hours per Employee');
-      this.trainingSpendBlackEmployees = this.findMetricValue(metrics, 'Training Spend on Black Employees');
-      this.trainingSpendBlackFemaleEmployees = this.findMetricValue(metrics, 'Training Spend on Black Female Employees');
-      this.trainingSpendBlackFemaleEmployeesWithDisabilities = this.findMetricValue(metrics, 'Training Spend on Black Female Employees with Disabilities');
-      this.trainingSpendFemaleEmployees = this.findMetricValue(metrics, 'Training Spend on Female Employees');
-      this.trainingSpendFemaleEmployeesWithDisabilities = this.findMetricValue(metrics, 'Training Spend on Female Employees with Disabilities');
-      this.totalInternalBursaries = this.findMetricValue(metrics, 'Total number of internal bursaries awarded');
-      this.actualPaymentOnBursaries = this.findMetricValue(metrics, 'Actual payment on bursaries');
-      this.learnershipOfferedToUnemployedAndDisabled = this.findMetricValue(metrics, 'Number of learnerships/ internships offered to unemployed people and people with disabilities');
-      this.learnershipsAndInternships = this.findMetricValue(metrics, 'Total number of learnerships and internships');
-      this.learnershipStudentsAdsorbedIntoEmployment = this.findMetricValue(metrics, 'Number of learnership students absorbed into permanent employment in the company');
-      this.numberEmployeesAttendedManagementLeadership = this.findMetricValue(metrics, 'Number of employees who attended Management/Leadership Development Programmes');
+  updateEnvironmentalMetrics(metrics) {
+    this.environmentalMetrics = metrics.map(metric => ({
+      metric: metric.metric,
+      scoringAchieved: metric.scoringAchieved
+    }));
 
-      // Graduate Programme
-      this.totalGraduateProgramIntake = this.findMetricValue(metrics, 'Total Graduate Programme Intake');
-      this.graduateProgramIntakeFemale = this.findMetricValue(metrics, 'Graduate Programme Intake (Female)');
-      this.totalGraduateProgramAbsorption = this.findMetricValue(metrics, 'Total Graduate Programme Absorption');
-      this.graduateProgramAbsorptionRate = this.findMetricValue(metrics, 'Graduate Programme Absorption rate');
+    console.log('Environmental metrics updated:', this.environmentalMetrics); // Log the updated array
+  },
 
-      // Employee Profile & Movements
-      this.totalNumberOfEmployeesBeginningYear = this.findMetricValue(metrics, 'Total Number of Employees (beginning of the year)');
-      this.totalNumberOfEmployeesEndOfYear = this.findMetricValue(metrics, 'Total Number of Employees (end of the year)');
-      this.newHiresPermanentEmployees = this.findMetricValue(metrics, 'New Hires (Permanent Employees)');
-      this.newHiresPermanentEmployeesWith3MonthsProbation = this.findMetricValue(metrics, 'New Hires (Permanent Employees) with 3 months\' probation');
-      this.temporaryEmployees = this.findMetricValue(metrics, 'Temporary Employees');
-      this.terminationsPermanentEmployees = this.findMetricValue(metrics, 'Terminations (Permanent Employees)');
-      this.resignations = this.findMetricValue(metrics, 'Resignations');
-      this.voluntaryRetrenchments = this.findMetricValue(metrics, 'Voluntary Retrenchments');
-      this.involuntaryRetrenchments = this.findMetricValue(metrics, 'Involuntary Retrenchments');
-      this.dismissals = this.findMetricValue(metrics, 'Dismissals');
-      this.nonTemporaryEmployees = this.findMetricValue(metrics, 'Non-Temporary Employees');
-      this.totalEmployeeInternalTransfers = this.findMetricValue(metrics, 'Total Employee Internal Transfers');
-      
-      // Employee Movements (continued)
-      this.vacanciesFilledByInternalCandidates = this.findMetricValue(metrics, 'Vacancies Filled by Internal Candidates');
-      this.internalPromotionalSuccessRate = this.findMetricValue(metrics, 'Internal Promotional Success Rate');
-      this.totalEmployeePromotions = this.findMetricValue(metrics, 'Total Employee Promotions');
-      this.newHiresWomen = this.findMetricValue(metrics, 'New Hires (Women)');
+  updateGovernanceMetrics(metrics) {
+    this.governanceMetrics = metrics.map(metric => ({
+      metric: metric.metric,
+      scoringAchieved: metric.scoringAchieved
+    }));
 
-      // Per Region
-      this.southAfricanEmployeesMale = this.findMetricValue(metrics, 'South African Employees (Male)');
-      this.southAfricanEmployeesFemale = this.findMetricValue(metrics, 'South African Employees (Female)');
-      this.internationalEmployeesMale = this.findMetricValue(metrics, 'International Employees (Male)');
-      this.internationalEmployeesFemale = this.findMetricValue(metrics, 'International Employees (Female)');
+    console.log('Governance metrics updated:', this.governanceMetrics); // Log the updated array
+  },
 
-      // Employee Equity Demographics
-      this.blackFemaleEmployees = this.findMetricValue(metrics, 'Black Female Employees');
-      this.colouredEmployees = this.findMetricValue(metrics, 'Coloured Employees');
-      this.indianEmployees = this.findMetricValue(metrics, 'Indian Employees');
-      this.asianEmployees = this.findMetricValue(metrics, 'Asian Employees');
-      this.whiteEmployees = this.findMetricValue(metrics, 'White Employees');
-      this.maleEmployees = this.findMetricValue(metrics, 'Male Employees');
-      this.femaleEmployees = this.findMetricValue(metrics, 'Female Employees');
-      this.disabilityRepresentationNumberOfEmployees = this.findMetricValue(metrics, 'Disability Representation (Number of Employees)');
+//     updateSocialMetrics(metrics) {
+//     // Update properties based on the new social metrics
+//     this.customerComplaints = metrics.find(m => m.metric === 'Customer Complaints').scoringAchieved;
+//     this.customerSatisfactionScore = metrics.find(m => m.metric === 'Customer Satisfaction Score').scoringAchieved;
 
-      // Per Disability Type
-      this.sensoryDisability = this.findMetricValue(metrics, 'Sensory');
-      this.physicalDisability = this.findMetricValue(metrics, 'Physical');
-      this.mentalDisability = this.findMetricValue(metrics, 'Mental');
-      this.multipleDisabilities = this.findMetricValue(metrics, 'Multiple');
+//     // Human Capital Development
+//     this.permanentEmployeesMale = metrics.find(m => m.metric === 'Permanent Employees (Male)').scoringAchieved;
+//     this.permanentEmployeesFemale = metrics.find(m => m.metric === 'Permanent Employees (Female)').scoringAchieved;
+//     this.temporaryEmployees = metrics.find(m => m.metric === 'Temporary Employees').scoringAchieved;
+//     this.fullTimeEmployeesMale = metrics.find(m => m.metric === 'Full-Time Employees (Male)').scoringAchieved;
+//     this.fullTimeEmployeesFemale = metrics.find(m => m.metric === 'Full-Time Employees (Female)').scoringAchieved;
+//     this.partTimeEmployeesMale = metrics.find(m => m.metric === 'Part-Time Employees (Male)').scoringAchieved;
+//     this.partTimeEmployeesFemale  = metrics.find(m => m.metric === 'Part-Time Employees (Female)').scoringAchieved;
+//     this.employeeTurnoverRate = metrics.find(m => m.metric === 'Employee Turnover Rate').scoringAchieved;
+//     this.trainingAndDevelopmentSpendPerEmployee = metrics.find(m => m.metric === 'Training and Development Spend per Employee').scoringAchieved;
+//     this.lostTimeInjuryFrequencyRate = metrics.find(m => m.metric === 'Lost Time Injury Frequency Rate').scoringAchieved;
+//     this.employeeEngagementScore = metrics.find(m => m.metric === 'Employee Engagement Score').scoringAchieved;
+//     this.genderPayGap = metrics.find(m => m.metric === 'Gender Pay Gap').scoringAchieved;
 
-      // Additional Labor Statistics
-      this.employeeCostsAndBenefits = this.findMetricValue(metrics, 'Employee Costs and Benefits');
-      this.totalBasicPayrollRands = this.findMetricValue(metrics, 'Total Basic Payroll (Rands)');
-      this.annualSalaryUnionizedEmployees = this.findMetricValue(metrics, 'Average annual salary - Unionized permanent employees (Rands)');
-      this.unionizedEmployees = this.findMetricValue(metrics, 'Number of unionised employees');
-      this.retrenchedIndividuals = this.findMetricValue(metrics, 'Number of retrenched individuals');
-      this.averageAnnualLeaveDaysTaken = this.findMetricValue(metrics, 'Average number of annual leave days taken by employees');
-      this.averageSickLeaveDaysTaken = this.findMetricValue(metrics, 'Average number of sick leave days taken by employees');
+//     this.topManagementBlackFemaleEmployees = metrics.find(m => m.metric === 'Top Management (Black Female)').scoringAchieved;
+//     this.topManagementAfricanEmployees = metrics.find(m => m.metric === 'Top Management (African)').scoringAchieved;
+//     this.topManagementColouredEmployees = metrics.find(m => m.metric === 'Top Management (Coloured)').scoringAchieved;
+//     this.topManagementIndianEmployees = metrics.find(m => m.metric === 'Top Management (Indian)').scoringAchieved;
+//     this.topManagementAsianEmployees = metrics.find(m => m.metric === 'Top Management (Asian)').scoringAchieved;
+//     this.topManagementWhiteEmployees = metrics.find(m => m.metric === 'Top Management (White)').scoringAchieved;
+//     this.topManagementDisabledEmployees = metrics.find(m => m.metric === 'Top Management (Disabled)').scoringAchieved;
 
-      // Incident Reporting
-      this.employeeGrievances = this.findMetricValue(metrics, 'Number of employee grievances reported');
-      this.incidentsOfMisconduct = this.findMetricValue(metrics, 'Number of incidents of misconduct that have been reported in the year');
-      this.medicalIncidents = this.findMetricValue(metrics, 'Number of medical incidents that have occurred during the year');
-      this.workmensCompensationClaims = this.findMetricValue(metrics, 'Number of workmen\'s compensation claims');
-      this.numberInjured = this.findMetricValue(metrics, 'Number of people injured in work-related incidents');
-      this.numberofFatalitiesBankMembers = this.findMetricValue(metrics, 'Number of fatalities (bank members)');
-      this.numberofFatalitiesNonBankMembers = this.findMetricValue(metrics, 'Number of fatalities (non-bank members)');
+//     // Senior Management
+//     this.seniorManagementTotalNumber = metrics.find(m => m.metric === 'Senior Management (Total number)').scoringAchieved;
+//     this.seniorManagementMaleEmployees = metrics.find(m => m.metric === 'Senior Management (Male)').scoringAchieved;
+//     this.seniorManagementFemaleEmployees = metrics.find(m => m.metric === 'Senior Management (Female)').scoringAchieved;
+//     this.seniorManagementBlackMaleEmployees = metrics.find(m => m.metric === 'Senior Management (Black Male)').scoringAchieved;
+//     this.seniorManagementBlackFemaleEmployees = metrics.find(m => m.metric === 'Senior Management (Black Female)').scoringAchieved;
+//     this.seniorManagementACIEmployees = metrics.find(m => m.metric === 'Senior Management (ACI)').scoringAchieved;
+//     this.seniorManagementColouredEmployees = metrics.find(m => m.metric === 'Senior Management (Coloured)').scoringAchieved;
+//     this.seniorManagementIndianEmployees = metrics.find(m => m.metric === 'Senior Management (Indian)').scoringAchieved;
+//     this.seniorManagementAsianEmployees = metrics.find(m => m.metric === 'Senior Management (Asian)').scoringAchieved;
+//     this.seniorManagementWhiteEmployees = metrics.find(m => m.metric === 'Senior Management (White)').scoringAchieved;
+//     this.seniorManagementDisabledEmployees = metrics.find(m => m.metric === 'Senior Management (Disabled)').scoringAchieved;
 
-      // Top Management
-      this.topManagementTotalNumber = this.findMetricValue(metrics, 'Top Management (Total number)');
-      this.topManagementMaleEmployees = this.findMetricValue(metrics, 'Top Management (Male)');
-      this.topManagementFemaleEmployees = this.findMetricValue(metrics, 'Top Management (Female)');
-      this.topManagementBlackMaleEmployees = this.findMetricValue(metrics, 'Top Management (Black Male)');
-      this.topManagementBlackFemaleEmployees = this.findMetricValue(metrics, 'Top Management (Black Female)');
-      this.topManagementAfricanEmployees = this.findMetricValue(metrics, 'Top Management (African)');
-      this.topManagementColouredEmployees = this.findMetricValue(metrics, 'Top Management (Coloured)');
-      this.topManagementIndianEmployees = this.findMetricValue(metrics, 'Top Management (Indian)');
-      this.topManagementAsianEmployees = this.findMetricValue(metrics, 'Top Management (Asian)');
-      this.topManagementWhiteEmployees = this.findMetricValue(metrics, 'Top Management (White)');
-      this.topManagementDisabledEmployees = this.findMetricValue(metrics, 'Top Management (Disabled)');
+//     // Middle Management
+//     this.middleManagementTotalNumber = metrics.find(m => m.metric === 'Middle Management (Total number)').scoringAchieved;
+//     this.middleManagementMaleEmployees = metrics.find(m => m.metric === 'Middle Management (Male)').scoringAchieved;
+//     this.middleManagementFemaleEmployees = metrics.find(m => m.metric === 'Middle Management (Female)').scoringAchieved;
+//     this.middleManagementBlackEmployees = metrics.find(m => m.metric === 'Middle Management (Black)').scoringAchieved;
+//     this.middleManagementACIEmployees = metrics.find(m => m.metric === 'Middle Management (ACI)').scoringAchieved;
+//     this.middleManagementColouredEmployees = metrics.find(m => m.metric === 'Middle Management (Coloured)').scoringAchieved;
+//     this.middleManagementIndianEmployees = metrics.find(m => m.metric === 'Middle Management (Indian)').scoringAchieved;
+//     this.middleManagementAsianEmployees = metrics.find(m => m.metric === 'Middle Management (Asian)').scoringAchieved;
+//     this.middleManagementWhiteEmployees = metrics.find(m => m.metric === 'Middle Management (White)').scoringAchieved;
+//     this.middleManagementDisabledEmployees = metrics.find(m => m.metric === 'Middle Management (Disabled)').scoringAchieved;
 
-      // Senior Management
-      this.seniorManagementTotalNumber = this.findMetricValue(metrics, 'Senior Management (Total number)');
-      this.seniorManagementMaleEmployees = this.findMetricValue(metrics, 'Senior Management (Male)');
-      this.seniorManagementFemaleEmployees = this.findMetricValue(metrics, 'Senior Management (Female)');
-      this.seniorManagementBlackMaleEmployees = this.findMetricValue(metrics, 'Senior Management (Black Male)');
-      this.seniorManagementBlackFemaleEmployees = this.findMetricValue(metrics, 'Senior Management (Black Female)');
-      this.seniorManagementACIEmployees = this.findMetricValue(metrics, 'Senior Management (ACI)');
-      this.seniorManagementColouredEmployees = this.findMetricValue(metrics, 'Senior Management (Coloured)');
-      this.seniorManagementIndianEmployees = this.findMetricValue(metrics, 'Senior Management (Indian)');
-      this.seniorManagementAsianEmployees = this.findMetricValue(metrics, 'Senior Management (Asian)');
-      this.seniorManagementWhiteEmployees = this.findMetricValue(metrics, 'Senior Management (White)');
-      this.seniorManagementDisabledEmployees = this.findMetricValue(metrics, 'Senior Management (Disabled)');
+//     // Junior Management
+//     this.juniorManagementTotalNumber = metrics.find(m => m.metric === 'Junior Management (Total number)').scoringAchieved;
+//     this.juniorManagementMaleEmployees = metrics.find(m => m.metric === 'Junior Management (Male)').scoringAchieved;
+//     this.juniorManagementFemaleEmployees = metrics.find(m => m.metric === 'Junior Management (Female)').scoringAchieved;
+//     this.juniorManagementBlackMaleEmployees = metrics.find(m => m.metric === 'Junior Management (Black Male)').scoringAchieved;
+//     this.juniorManagementBlackFemaleEmployees = metrics.find(m => m.metric === 'Junior Management (Black Female)').scoringAchieved;
+//     this.juniorManagementACIEmployees = metrics.find(m => m.metric === 'Junior Management (ACI)').scoringAchieved;
+//     this.juniorManagementColouredEmployees = metrics.find(m => m.metric === 'Junior Management (Coloured)').scoringAchieved;
+//     this.juniorManagementIndianEmployees = metrics.find(m => m.metric === 'Junior Management (Indian)').scoringAchieved;
+//     this.juniorManagementAsianEmployees = metrics.find(m => m.metric === 'Junior Management (Asian)').scoringAchieved;
+//     this.juniorManagementWhiteEmployees = metrics.find(m => m.metric === 'Junior Management (White)').scoringAchieved;
+//     this.juniorManagementDisabledEmployees = metrics.find(m => m.metric === 'Junior Management (Disabled)').scoringAchieved;
 
-      // Middle Management
-      this.middleManagementTotalNumber = this.findMetricValue(metrics, 'Middle Management (Total number)');
-      this.middleManagementMaleEmployees = this.findMetricValue(metrics, 'Middle Management (Male)');
-      this.middleManagementFemaleEmployees = this.findMetricValue(metrics, 'Middle Management (Female)');
-      this.middleManagementBlackEmployees = this.findMetricValue(metrics, 'Middle Management (Black)');
-      this.middleManagementACIEmployees = this.findMetricValue(metrics, 'Middle Management (ACI)');
-      this.middleManagementColouredEmployees = this.findMetricValue(metrics, 'Middle Management (Coloured)');
-      this.middleManagementIndianEmployees = this.findMetricValue(metrics, 'Middle Management (Indian)');
-      this.middleManagementAsianEmployees = this.findMetricValue(metrics, 'Middle Management (Asian)');
-      this.middleManagementWhiteEmployees = this.findMetricValue(metrics, 'Middle Management (White)');
-      this.middleManagementDisabledEmployees = this.findMetricValue(metrics, 'Middle Management (Disabled)');
+//     // Semi-Skilled
+//     this.semiSkilledTotalNumber = metrics.find(m => m.metric === 'Semi-Skilled (Total number)').scoringAchieved;
+//     this.semiSkilledFemaleEmployees = metrics.find(m => m.metric === 'Semi-Skilled  (Female)').scoringAchieved;
+//     this.semiSkilledBlackMaleEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Black Male)').scoringAchieved;
+//     this.semiSkilledBlackFemaleEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Black Female)').scoringAchieved;
+//     this.semiSkilledACIEmployees = metrics.find(m => m.metric === 'Semi-Skilled (ACI)').scoringAchieved;
+//     this.semiSkilledColouredEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Coloured)').scoringAchieved;
+//     this.semiSkilledIndianEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Indian)').scoringAchieved;
+//     this.semiSkilledAsianEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Asian)').scoringAchieved;
+//     this.semiSkilledWhiteEmployees = metrics.find(m => m.metric === 'Semi-Skilled (White)').scoringAchieved;
+//     this.semiSkilledDisabledEmployees = metrics.find(m => m.metric === 'Semi-Skilled (Disabled)').scoringAchieved;
 
-      // Junior Management
-      this.juniorManagementTotalNumber = this.findMetricValue(metrics, 'Junior Management (Total number)');
-      this.juniorManagementMaleEmployees = this.findMetricValue(metrics, 'Junior Management (Male)');
-      this.juniorManagementFemaleEmployees = this.findMetricValue(metrics, 'Junior Management (Female)');
-      this.juniorManagementBlackMaleEmployees = this.findMetricValue(metrics, 'Junior Management (Black Male)');
-      this.juniorManagementBlackFemaleEmployees = this.findMetricValue(metrics, 'Junior Management (Black Female)');
-      this.juniorManagementACIEmployees = this.findMetricValue(metrics, 'Junior Management (ACI)');
-      this.juniorManagementColouredEmployees = this.findMetricValue(metrics, 'Junior Management (Coloured)');
-      this.juniorManagementIndianEmployees = this.findMetricValue(metrics, 'Junior Management (Indian)');
-      this.juniorManagementAsianEmployees = this.findMetricValue(metrics, 'Junior Management (Asian)');
-      this.juniorManagementWhiteEmployees = this.findMetricValue(metrics, 'Junior Management (White)');
-      this.juniorManagementDisabledEmployees = this.findMetricValue(metrics, 'Junior Management (Disabled)');
+//     // Unskilled
+//     this.unskilledTotalNumber = metrics.find(m => m.metric === 'Unskilled (Total number)').scoringAchieved;
+//     this.unskilledFemaleEmployees = metrics.find(m => m.metric === 'Unskilled (Female)').scoringAchieved;
+//     this.unskilledBlackMaleEmployees = metrics.find(m => m.metric === 'Unskilled (Black Male)').scoringAchieved;
+//     this.unskilledBlackFemaleEmployees = metrics.find(m => m.metric === 'Unskilled (Black Female)').scoringAchieved;
+//     this.unskilledACIEmployees = metrics.find(m => m.metric === 'Unskilled (ACI)').scoringAchieved;
+//     this.unskilledColouredEmployees = metrics.find(m => m.metric === 'Unskilled (Coloured)').scoringAchieved;
+//     this.unskilledIndianEmployees = metrics.find(m => m.metric === 'Unskilled (Indian)').scoringAchieved;
+//     this.unskilledAsianEmployees = metrics.find(m => m.metric === 'Unskilled (Asian)').scoringAchieved;
+//     this.unskilledWhiteEmployees = metrics.find(m => m.metric === 'Unskilled (White)').scoringAchieved;
+//     this.unskilledDisabledEmployees = metrics.find(m => m.metric === 'Unskilled (Disabled)').scoringAchieved;
 
-      // Semi-Skilled
-      this.semiSkilledTotalNumber = this.findMetricValue(metrics, 'Semi-Skilled (Total number)');
-      this.semiSkilledFemaleEmployees = this.findMetricValue(metrics, 'Semi-Skilled  (Female)');
-      this.semiSkilledBlackMaleEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Black Male)');
-      this.semiSkilledBlackFemaleEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Black Female)');
-      this.semiSkilledACIEmployees = this.findMetricValue(metrics, 'Semi-Skilled (ACI)');
-      this.semiSkilledColouredEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Coloured)');
-      this.semiSkilledIndianEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Indian)');
-      this.semiSkilledAsianEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Asian)');
-      this.semiSkilledWhiteEmployees = this.findMetricValue(metrics, 'Semi-Skilled (White)');
-      this.semiSkilledDisabledEmployees = this.findMetricValue(metrics, 'Semi-Skilled (Disabled)');
+//     // Per Disability Type
+//     this.sensoryDisability = metrics.find(m => m.metric === 'Sensory').scoringAchieved;
+//     this.physicalDisability = metrics.find(m => m.metric === 'Physical').scoringAchieved;
+//     this.mentalDisability = metrics.find(m => m.metric === 'Mental').scoringAchieved;
+//     this.multipleDisabilities = metrics.find(m => m.metric === 'Multiple').scoringAchieved;
 
-      // Unskilled
-      this.unskilledTotalNumber = this.findMetricValue(metrics, 'Unskilled (Total number)');
-      this.unskilledFemaleEmployees = this.findMetricValue(metrics, 'Unskilled (Female)');
-      this.unskilledBlackMaleEmployees = this.findMetricValue(metrics, 'Unskilled (Black Male)');
-      this.unskilledBlackFemaleEmployees = this.findMetricValue(metrics, 'Unskilled (Black Female)');
-      this.unskilledACIEmployees = this.findMetricValue(metrics, 'Unskilled (ACI)');
-      this.unskilledColouredEmployees = this.findMetricValue(metrics, 'Unskilled (Coloured)');
-      this.unskilledIndianEmployees = this.findMetricValue(metrics, 'Unskilled (Indian)');
-      this.unskilledAsianEmployees = this.findMetricValue(metrics, 'Unskilled (Asian)');
-      this.unskilledWhiteEmployees = this.findMetricValue(metrics, 'Unskilled (White)');
-      this.unskilledDisabledEmployees = this.findMetricValue(metrics, 'Unskilled (Disabled)');
+//     // Financial Inclusion
+//     this.mortgageLoansGranted = metrics.find(m => m.metric === 'Mortgage Loans Granted').scoringAchieved;
+//     this.mortgageLoansValueTotal = metrics.find(m => m.metric === 'Mortgage Loans Value (Total)').scoringAchieved;
+//     this.mortgageLoansAffordableHousingTotal = metrics.find(m => m.metric === 'Mortgage Loans (Affordable Housing) (Total)').scoringAchieved;
+//     this.mortgageLoansAffordableHousingValueTotal = metrics.find(m => m.metric === 'Mortgage Loans (Affordable Housing) (Value Total)').scoringAchieved;
 
-      // Per Disability Type
-      this.sensoryDisability = this.findMetricValue(metrics, 'Sensory');
-      this.physicalDisability = this.findMetricValue(metrics, 'Physical');
-      this.mentalDisability = this.findMetricValue(metrics, 'Mental');
-      this.multipleDisabilities = this.findMetricValue(metrics, 'Multiple');
+//     // Physical Footprint
+//     this.outlets = metrics.find(m => m.metric === 'Outlets').scoringAchieved;
+//     this.atms = metrics.find(m => m.metric === 'ATMs').scoringAchieved;
+//     this.posDevices = metrics.find(m => m.metric === 'POS Devices').scoringAchieved;
+//     this.totalClients = metrics.find(m => m.metric === 'Total Clients').scoringAchieved;
+//     this.digitallyActiveClients = metrics.find(m => m.metric === 'Digitally Active Clients').scoringAchieved;
 
-      // Financial Inclusion
-      this.mortgageLoansGranted = this.findMetricValue(metrics, 'Mortgage Loans Granted');
-      this.mortgageLoansValueTotal = this.findMetricValue(metrics, 'Mortgage Loans Value (Total)');
-      this.mortgageLoansAffordableHousingTotal = this.findMetricValue(metrics, 'Mortgage Loans (Affordable Housing) (Total)');
-      this.mortgageLoansAffordableHousingValueTotal = this.findMetricValue(metrics, 'Mortgage Loans (Affordable Housing) (Value Total)');
+//     // Suppliers
+//     this.totalNumberSuppliers = metrics.find(m => m.metric === 'Total Number of Suppliers').scoringAchieved;
+//     this.totalProcurementSpend = metrics.find(m => m.metric === 'Total Procurement Spend').scoringAchieved;
+//     this.totalProcurementSpendExemptMicroenterprises = metrics.find(m => m.metric === 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)').scoringAchieved;
+//     this.totalProcurementSpendQualifyingSmallEnterprises = metrics.find(m => m.metric === 'Total Procurement Spend on Qualifying Small Enterprises (QSEs)').scoringAchieved;
+//     this.totalProcurementSpend51PercentBlackOwned = metrics.find(m => m.metric === 'Total Procurement Spend on 51% Black Owned Suppliers').scoringAchieved;
+//     this.totalProcurementSpend30PercentBlackOwned = metrics.find(m => m.metric === 'Total Procurement Spend on 30% Black Women Owned Suppliers').scoringAchieved;
+//     this.localProcurementSpend = metrics.find(m => m.metric === 'Local Procurement Spend').scoringAchieved;
 
-      // Physical Footprint
-      this.outlets = this.findMetricValue(metrics, 'Outlets');
-      this.atms = this.findMetricValue(metrics, 'ATMs');
-      this.posDevices = this.findMetricValue(metrics, 'POS Devices');
-      this.totalClients = this.findMetricValue(metrics, 'Total Clients');
-      this.digitallyActiveClients = this.findMetricValue(metrics, 'Digitally Active Clients');
+//     // Regulators
+//     this.totalEnvironmentalIncidents = metrics.find(m => m.metric === 'Total Number of environmental incidents (Level 1 + Level 2 + Level 3)').scoringAchieved;
+//     this.totalEnvironmentalFines = metrics.find(m => m.metric === 'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)').scoringAchieved;
+//   },
 
-      // Suppliers
-      this.totalNumberSuppliers = this.findMetricValue(metrics, 'Total Number of Suppliers');
-      this.totalProcurementSpend = this.findMetricValue(metrics, 'Total Procurement Spend');
-      this.totalProcurementSpendExemptMicroenterprises = this.findMetricValue(metrics, 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)');
-      this.totalProcurementSpendQualifyingSmallEnterprises = this.findMetricValue(metrics, 'Total Procurement Spend on Qualifying Small Enterprises (QSEs)');
-      this.totalProcurementSpend51PercentBlackOwned = this.findMetricValue(metrics, 'Total Procurement Spend on 51% Black Owned Suppliers');
-      this.totalProcurementSpend30PercentBlackOwned = this.findMetricValue(metrics, 'Total Procurement Spend on 30% Black Women Owned Suppliers');
-      this.localProcurementSpend = this.findMetricValue(metrics, 'Local Procurement Spend');
+//   updateEnvironmentalMetrics(metrics) {
+//   // Update properties based on the new environmental metrics
+//   this.totalEnergyUse = metrics.find(m => m.metric === 'Total Energy Use').scoringAchieved;
+//   this.totalRenewableEnergy = metrics.find(m => m.metric === 'Total Renewable Energy').scoringAchieved;
+//   this.totalNonRenewableEnergy = metrics.find(m => m.metric === 'Total Non-Renewable Energy').scoringAchieved;
+//   this.nonRenewableEnergySources = metrics.find(m => m.metric === 'Non-Renewable Energy Sources').scoringAchieved;
 
-      // Regulators
-      this.totalEnvironmentalIncidents = this.findMetricValue(metrics, 'Total Number of environmental incidents (Level 1 + Level 2 + Level 3)');
-      this.totalEnvironmentalFines = this.findMetricValue(metrics, 'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)');
-        },
+//   // Greenhouse gas emissions
+//   this.carbonEmissions = metrics.find(m => m.metric === 'Carbon Emissions').scoringAchieved;
+//   this.carEmissions = metrics.find(m => m.metric === 'Car Emissions').scoringAchieved;
+//   this.refrigerantGasEmissions = metrics.find(m => m.metric === 'Refrigerant Gas Emissions').scoringAchieved;
+//   this.dieselGeneratorsEmissions = metrics.find(m => m.metric === 'Diesel Generators Emissions').scoringAchieved;
+//   this.electricityEmissions = metrics.find(m => m.metric === 'Electricity Emissions').scoringAchieved;
+//   this.atmEmissions = metrics.find(m => m.metric === 'ATM Emissions').scoringAchieved;
+//   this.totalIndirectEmissions = metrics.find(m => m.metric === 'Total Indirect Emissions').scoringAchieved;
+//   this.flightEmissions = metrics.find(m => m.metric === 'Flight Emissions').scoringAchieved;
+//   this.cashInTransitEmissions = metrics.find(m => m.metric === 'Cash-In-Transit Emissions').scoringAchieved;
+//   this.carRentalsEmissions = metrics.find(m => m.metric === 'Car Rentals Emissions').scoringAchieved;
+//   this.cloudComputingEmissions = metrics.find(m => m.metric === 'Cloud Computing Emissions').scoringAchieved;
+//   this.courierEmissions = metrics.find(m => m.metric === 'Courier Emissions').scoringAchieved;
+//   this.paperUsageEmissions = metrics.find(m => m.metric === 'Paper Usage Emissions').scoringAchieved;
+//   this.wasteDisposalEmissions = metrics.find(m => m.metric === 'Waste Disposal Emissions').scoringAchieved;
+//   this.employeeCommutingEmissions = metrics.find(m => m.metric === 'Employee Commuting Emissions').scoringAchieved;
+//   this.electricityTransmissionLossesEmissions = metrics.find(m => m.metric === 'Electricity Transmission Losses Emissions').scoringAchieved;
+//   this.carbonEmissionsPerMeterSquared = metrics.find(m => m.metric === 'Carbon Emissions Per Meter Squared').scoringAchieved;
 
-      updateEnvironmentalMetrics(metrics) {
-      // Update properties based on the new environmental metrics
-      this.totalEnergyUse = this.findMetricValue(metrics, 'Total Energy Use');
-      this.totalRenewableEnergy = this.findMetricValue(metrics, 'Total Renewable Energy');
-      this.totalNonRenewableEnergy = this.findMetricValue(metrics, 'Total Non-Renewable Energy');
-      this.nonRenewableEnergySources = this.findMetricValue(metrics, 'Non-Renewable Energy Sources');
+//   // Waste Management
+//   this.totalWaste = metrics.find(m => m.metric === 'Total Waste').scoringAchieved;
+//   this.recycledWaste = metrics.find(m => m.metric === 'Recycled Waste').scoringAchieved;
+//   this.wasteToLandfill = metrics.find(m => m.metric === 'Waste to Landfill').scoringAchieved;
+// },
 
-      // Greenhouse gas emissions
-      this.carbonEmissions = this.findMetricValue(metrics, 'Carbon Emissions');
-      this.carEmissions = this.findMetricValue(metrics, 'Car Emissions');
-      this.refrigerantGasEmissions = this.findMetricValue(metrics, 'Refrigerant Gas Emissions');
-      this.dieselGeneratorsEmissions = this.findMetricValue(metrics, 'Diesel Generators Emissions');
-      this.electricityEmissions = this.findMetricValue(metrics, 'Electricity Emissions');
-      this.atmEmissions = this.findMetricValue(metrics, 'ATM Emissions');
-      this.totalIndirectEmissions = this.findMetricValue(metrics, 'Total Indirect Emissions');
-      this.flightEmissions = this.findMetricValue(metrics, 'Flight Emissions');
-      this.cashInTransitEmissions = this.findMetricValue(metrics, 'Cash-In-Transit Emissions');
-      this.carRentalsEmissions = this.findMetricValue(metrics, 'Car Rentals Emissions');
-      this.cloudComputingEmissions = this.findMetricValue(metrics, 'Cloud Computing Emissions');
-      this.courierEmissions = this.findMetricValue(metrics, 'Courier Emissions');
-      this.paperUsageEmissions = this.findMetricValue(metrics, 'Paper Usage Emissions');
-      this.wasteDisposalEmissions = this.findMetricValue(metrics, 'Waste Disposal Emissions');
-      this.employeeCommutingEmissions = this.findMetricValue(metrics, 'Employee Commuting Emissions');
-      this.electricityTransmissionLossesEmissions = this.findMetricValue(metrics, 'Electricity Transmission Losses Emissions');
-      this.carbonEmissionsPerMeterSquared = this.findMetricValue(metrics, 'Carbon Emissions Per Meter Squared');
+//   updateGovernanceMetrics(metrics) {
+//     // Update properties based on the new governance metrics
+//     this.numberOfBoardMembers = metrics.find(m => m.metric === 'Number of Board Members').scoringAchieved;
+//     this.independentNonExecutiveDirectors = metrics.find(m => m.metric === 'Independent Non-Executive Directors').scoringAchieved;
+//     this.executiveDirectors = metrics.find(m => m.metric === 'Executive Directors').scoringAchieved;
+//     this.nonExecutiveDirectors = metrics.find(m => m.metric === 'Non-Executive Directors').scoringAchieved;
+//     this.independentBoardChairman = metrics.find(m => m.metric === 'Independent Board Chairman').scoringAchieved;
+//     this.blackACIExecutiveBoardMembers = metrics.find(m => m.metric === 'Black, Asian and Coloured (ACI) Executive Board Members').scoringAchieved;
+//     this.blackACIWomenExecutiveBoardMembers = metrics.find(m => m.metric === 'Black, Asian and Coloured (ACI) Women Executive Board Members').scoringAchieved;
+//     this.blackACIIndependentNonExecutiveBoardMembers = metrics.find(m => m.metric === 'Black, Asian and Coloured (ACI) Independent Non-Executive Board Members').scoringAchieved;
 
-      // Waste Management
-      this.totalWaste = this.findMetricValue(metrics, 'Total Waste');
-      this.recycledWaste = this.findMetricValue(metrics, 'Recycled Waste');
-      this.wasteToLandfill = this.findMetricValue(metrics, 'Waste to Landfill');
-    },
+//     this.totalNumberOfBoardMeetings = metrics.find(m => m.metric === 'Total Number of Board Meetings').scoringAchieved;
+//     this.boardTrainingHours = metrics.find(m => m.metric === 'Board Training Hours').scoringAchieved;
 
-    updateGovernanceMetrics(metrics) {
-      // Update properties based on the new governance metrics
-      this.numberOfBoardMembers = this.findMetricValue(metrics, 'Number of Board Members');
-      this.independentNonExecutiveDirectors = this.findMetricValue(metrics, 'Independent Non-Executive Directors');
-      this.executiveDirectors = this.findMetricValue(metrics, 'Executive Directors');
-      this.nonExecutiveDirectors = this.findMetricValue(metrics, 'Non-Executive Directors');
-      this.independentBoardChairman = this.findMetricValue(metrics, 'Independent Board Chairman');
-      this.blackACIExecutiveBoardMembers = this.findMetricValue(metrics, 'Black, Asian and Coloured (ACI) Executive Board Members');
-      this.blackACIWomenExecutiveBoardMembers = this.findMetricValue(metrics, 'Black, Asian and Coloured (ACI) Women Executive Board Members');
-      this.blackACIIndependentNonExecutiveBoardMembers = this.findMetricValue(metrics, 'Black, Asian and Coloured (ACI) Independent Non-Executive Board Members');
+//     this.whiteMales = metrics.find(m => m.metric === 'White Males').scoringAchieved;
+//     this.whiteFemales = metrics.find(m => m.metric === 'White Females').scoringAchieved;
+//     this.aciFemales = metrics.find(m => m.metric === 'ACI Females').scoringAchieved;
+//     this.aciMales = metrics.find(m => m.metric === 'ACI Males').scoringAchieved;
+//     this.nonSABoardMembers = metrics.find(m => m.metric === 'Non SA Board Members').scoringAchieved;
 
-      this.totalNumberOfBoardMeetings = this.findMetricValue(metrics, 'Total Number of Board Meetings');
-      this.boardTrainingHours = this.findMetricValue(metrics, 'Board Training Hours');
+//     this.boardMembersLessThan1Year = metrics.find(m => m.metric === 'Board Members < 1 year').scoringAchieved;
+//     this.boardMembers1To3Years = metrics.find(m => m.metric === 'Board Members 1 to 3 Years').scoringAchieved;
+//     this.boardMembers4To6Years = metrics.find(m => m.metric === 'Board Members 4 to 6 Years').scoringAchieved;
+//     this.boardMembers7To9Years = metrics.find(m => m.metric === 'Board Members 7 to 9 Years').scoringAchieved;
+//     this.boardMembersMoreThan9Years = metrics.find(m => m.metric === 'Board Members > 9 Years').scoringAchieved;
+//     this.boardMembers40To49YearsAge = metrics.find(m => m.metric === 'Board Members 40 to 49 Years Age').scoringAchieved;
+//     this.boardMembers50To59YearsAge = metrics.find(m => m.metric === 'Board Members 50 to 59 Years Age').scoringAchieved;
+//     this.boardMembers60To69YearsAge = metrics.find(m => m.metric === 'Board Members 60 to 69 Years Age').scoringAchieved;
+//     this.boardMembers70Plus = metrics.find(m => m.metric === 'Board Members 70+').scoringAchieved;
 
-      this.whiteMales = this.findMetricValue(metrics, 'White Males');
-      this.whiteFemales = this.findMetricValue(metrics, 'White Females');
-      this.aciFemales = this.findMetricValue(metrics, 'ACI Females');
-      this.aciMales = this.findMetricValue(metrics, 'ACI Males');
-      this.nonSABoardMembers = this.findMetricValue(metrics, 'Non SA Board Members');
+//     this.totalNumberOfExcoMembers = metrics.find(m => m.metric === 'Total Number of Exco Members').scoringAchieved;
+//     this.executiveDirectorsExco = metrics.find(m => m.metric === 'Executive Directors on Exco').scoringAchieved;
+//     this.prescribedOfficers = metrics.find(m => m.metric === 'Prescribed Officers').scoringAchieved;
+//     this.exOfficioMembers = metrics.find(m => m.metric === 'Ex Officio Members').scoringAchieved;
+//     this.womenExcoMembers = metrics.find(m => m.metric === 'Women Exco Members').scoringAchieved;
+//     this.aciExcoMembers = metrics.find(m => m.metric === 'ACI Exco Members').scoringAchieved;
 
-      this.boardMembersLessThan1Year = this.findMetricValue(metrics, 'Board Members < 1 year');
-      this.boardMembers1To3Years = this.findMetricValue(metrics, 'Board Members 1 to 3 Years');
-      this.boardMembers4To6Years = this.findMetricValue(metrics, 'Board Members 4 to 6 Years');
-      this.boardMembers7To9Years = this.findMetricValue(metrics, 'Board Members 7 to 9 Years');
-      this.boardMembersMoreThan9Years = this.findMetricValue(metrics, 'Board Members > 9 Years');
-      this.boardMembers40To49YearsAge = this.findMetricValue(metrics, 'Board Members 40 to 49 Years Age');
-      this.boardMembers50To59YearsAge = this.findMetricValue(metrics, 'Board Members 50 to 59 Years Age');
-      this.boardMembers60To69YearsAge = this.findMetricValue(metrics, 'Board Members 60 to 69 Years Age');
-      this.boardMembers70Plus = this.findMetricValue(metrics, 'Board Members 70+');
+//     this.excoMembers0To3Years = metrics.find(m => m.metric === 'Exco Members 0 to 3 Years').scoringAchieved;
+//     this.excoMembers4To6Years = metrics.find(m => m.metric === 'Exco Members 4 to 6 Years').scoringAchieved;
+//     this.excoMembers7To9Years = metrics.find(m => m.metric === 'Exco Members 7 to 9 Years').scoringAchieved;
 
-      this.totalNumberOfExcoMembers = this.findMetricValue(metrics, 'Total Number of Exco Members');
-      this.executiveDirectorsExco = this.findMetricValue(metrics, 'Executive Directors on Exco');
-      this.prescribedOfficers = this.findMetricValue(metrics, 'Prescribed Officers');
-      this.exOfficioMembers = this.findMetricValue(metrics, 'Ex Officio Members');
-      this.womenExcoMembers = this.findMetricValue(metrics, 'Women Exco Members');
-      this.aciExcoMembers = this.findMetricValue(metrics, 'ACI Exco Members');
+//     this.excoMembers0To10Years = metrics.find(m => m.metric === 'Exco Members 0 to 10 Years').scoringAchieved;
+//     this.excoMembers11To20Years = metrics.find(m => m.metric === 'Exco Members 11 to 20 Years').scoringAchieved;
+//     this.excoMembersMoreThan20Years = metrics.find(m => m.metric === 'Exco Members > 20 Years').scoringAchieved;
 
-      this.excoMembers0To3Years = this.findMetricValue(metrics, 'Exco Members 0 to 3 Years');
-      this.excoMembers4To6Years = this.findMetricValue(metrics, 'Exco Members 4 to 6 Years');
-      this.excoMembers7To9Years = this.findMetricValue(metrics, 'Exco Members 7 to 9 Years');
+//     this.controllingShareholder = metrics.find(m => m.metric === 'Controlling Shareholder').scoringAchieved;
+//     this.multipleShareholderRights = metrics.find(m => m.metric === 'Multiple Shareholder Rights').scoringAchieved;
 
-      this.excoMembers0To10Years = this.findMetricValue(metrics, 'Exco Members 0 to 10 Years');
-      this.excoMembers11To20Years = this.findMetricValue(metrics, 'Exco Members 11 to 20 Years');
-      this.excoMembersMoreThan20Years = this.findMetricValue(metrics, 'Exco Members > 20 Years');
+//     this.beneficialSharesDirectOwnershipCEO = metrics.find(m => m.metric === 'Beneficial Shares (Direct Ownership) - CEO').scoringAchieved;
+//     this.beneficialSharesIndirectOwnershipCEO = metrics.find(m => m.metric === 'Beneficial Shares (Indirect Ownership) - CEO').scoringAchieved;
+//     this.totalSharesOwnedCEO = metrics.find(m => m.metric === 'Total Shares Owned - CEO').scoringAchieved;
 
-      this.controllingShareholder = this.findMetricValue(metrics, 'Controlling Shareholder');
-      this.multipleShareholderRights = this.findMetricValue(metrics, 'Multiple Shareholder Rights');
+//     this.beneficialSharesDirectOwnershipCFO = metrics.find(m => m.metric === 'Beneficial Shares (Direct Ownership) - CFO').scoringAchieved;
+//     this.beneficialSharesIndirectOwnershipCFO = metrics.find(m => m.metric === 'Beneficial Shares (Indirect Ownership) - CFO').scoringAchieved;
+//     this.totalSharesOwnedCFO = metrics.find(m => m.metric === 'Total Shares Owned - CFO').scoringAchieved;
 
-      this.beneficialSharesDirectOwnershipCEO = this.findMetricValue(metrics, 'Beneficial Shares (Direct Ownership) - CEO');
-      this.beneficialSharesIndirectOwnershipCEO = this.findMetricValue(metrics, 'Beneficial Shares (Indirect Ownership) - CEO');
-      this.totalSharesOwnedCEO = this.findMetricValue(metrics, 'Total Shares Owned - CEO');
+//     this.beneficialSharesDirectOwnershipCOO = metrics.find(m => m.metric === 'Beneficial Shares (Direct Ownership) - COO').scoringAchieved;
+//     this.beneficialSharesIndirectOwnershipCOO = metrics.find(m => m.metric === 'Beneficial Shares (Indirect Ownership) - COO').scoringAchieved;
+//     this.totalSharesOwnedCOO = metrics.find(m => m.metric === 'Total Shares Owned - COO').scoringAchieved;
 
-      this.beneficialSharesDirectOwnershipCFO = this.findMetricValue(metrics, 'Beneficial Shares (Direct Ownership) - CFO');
-      this.beneficialSharesIndirectOwnershipCFO = this.findMetricValue(metrics, 'Beneficial Shares (Indirect Ownership) - CFO');
-      this.totalSharesOwnedCFO = this.findMetricValue(metrics, 'Total Shares Owned - CFO');
+//     // Audit
+//     this.auditors = metrics.find(m => m.metric === 'Auditors').scoringAchieved;
+//     this.auditorTenure = metrics.find(m => m.metric === 'Auditor Tenure').scoringAchieved;
+//     this.auditFees = metrics.find(m => m.metric === 'Audit Fees').scoringAchieved;
 
-      this.beneficialSharesDirectOwnershipCOO = this.findMetricValue(metrics, 'Beneficial Shares (Direct Ownership) - COO');
-      this.beneficialSharesIndirectOwnershipCOO = this.findMetricValue(metrics, 'Beneficial Shares (Indirect Ownership) - COO');
-      this.totalSharesOwnedCOO = this.findMetricValue(metrics, 'Total Shares Owned - COO');
+//     // Executive Remuneration 
+//     this.executiveRemunerationLinkedToESG = metrics.find(m => m.metric === 'Executive Remuneration Linked to ESG').scoringAchieved;
 
-      // Audit
-      this.auditors = this.findMetricValue(metrics, 'Auditors');
-      this.auditorTenure = this.findMetricValue(metrics, 'Auditor Tenure');
-      this.auditFees = this.findMetricValue(metrics, 'Audit Fees');
+//     // CEO Remuneration
+//     this.ceoGuaranteedPackage = metrics.find(m => m.metric === 'CEO Guaranteed Package').scoringAchieved;
+//     this.ceoShortTermIncentive = metrics.find(m => m.metric === 'CEO Short-term incentive').scoringAchieved;
+//     this.ceoLongTermIncentive = metrics.find(m => m.metric === 'CEO Long-term incentive').scoringAchieved;
+//     this.ceoTotalRemuneration = metrics.find(m => m.metric === 'CEO Total remuneration').scoringAchieved;
+//     this.ceoSharePriceAsMultipleOfGuaranteedPackage = metrics.find(m => m.metric === 'CEO Share Price as Multiple of Guaranteed Package').scoringAchieved;
 
-      // Executive Remuneration 
-      this.executiveRemunerationLinkedToESG = this.findMetricValue(metrics, 'Executive Remuneration Linked to ESG');
+//     // CFO Remuneration
+//     this.cfoGuaranteedPackage = metrics.find(m => m.metric === 'CFO Guaranteed Package').scoringAchieved;
+//     this.cfoShortTermIncentive = metrics.find(m => m.metric === 'CFO Short-term incentive').scoringAchieved;
+//     this.cfoLongTermIncentive = metrics.find(m => m.metric === 'CFO Long-term incentive').scoringAchieved;
+//     this.cfoTotalRemuneration = metrics.find(m => m.metric === 'CFO Total remuneration').scoringAchieved;
 
-      // CEO Remuneration
-      this.ceoGuaranteedPackage = this.findMetricValue(metrics, 'CEO Guaranteed Package');
-      this.ceoShortTermIncentive = this.findMetricValue(metrics, 'CEO Short-term incentive');
-      this.ceoLongTermIncentive = this.findMetricValue(metrics, 'CEO Long-term incentive');
-      this.ceoTotalRemuneration = this.findMetricValue(metrics, 'CEO Total remuneration');
-      this.ceoSharePriceAsMultipleOfGuaranteedPackage = this.findMetricValue(metrics, 'CEO Share Price as Multiple of Guaranteed Package');
+//     // COO Remuneration
+//     this.cooGuaranteedPackage = metrics.find(m => m.metric === 'COO Guaranteed Package').scoringAchieved;
+//     this.cooShortTermIncentive = metrics.find(m => m.metric === 'COO Short-term incentive').scoringAchieved;
+//     this.cooLongTermIncentive = metrics.find(m => m.metric === 'COO Long-term incentive').scoringAchieved;
+//     this.cooTotalRemuneration = metrics.find(m => m.metric === 'COO Total remuneration').scoringAchieved;
 
-      // CFO Remuneration
-      this.cfoGuaranteedPackage = this.findMetricValue(metrics, 'CFO Guaranteed Package');
-      this.cfoShortTermIncentive = this.findMetricValue(metrics, 'CFO Short-term incentive');
-      this.cfoLongTermIncentive = this.findMetricValue(metrics, 'CFO Long-term incentive');
-      this.cfoTotalRemuneration = this.findMetricValue(metrics, 'CFO Total remuneration');
+//     // Ethics and Integrity
+//     this.employeesCompletedEthicsTraining = metrics.find(m => m.metric === 'Employees Completed Ethics Training').scoringAchieved;
+//     this.contractorsCompletedEthicsTraining = metrics.find(m => m.metric === 'Contractors Completed Ethics Training').scoringAchieved;
+//     this.subsidiariesCompletedEthicsTraining = metrics.find(m => m.metric === 'Subsidiaries Completed Ethics Training').scoringAchieved;
+//     this.reportedCases = metrics.find(m => m.metric === 'Reported Cases').scoringAchieved;
+//     this.casesStillUnderInvestigation = metrics.find(m => m.metric === 'Cases Still Under Investigation').scoringAchieved;
+//     this.substantiatedCases = metrics.find(m => m.metric === 'Substantiated Cases').scoringAchieved;
+//     this.unsubstantiatedCases = metrics.find(m => m.metric === 'Unsubstantiated Cases').scoringAchieved;
+//     this.disciplinaryCasesReported = metrics.find(m => m.metric === 'Disciplinary Cases Reported').scoringAchieved;
+//     this.disciplinaryCasesConcluded = metrics.find(m => m.metric === 'Disciplinary Cases Concluded').scoringAchieved;
+//     this.ethicalDisciplinaryCasesConcluded = metrics.find(m => m.metric === 'Ethical & Disciplinary Cases Concluded').scoringAchieved;
+//     this.ongoingDisciplinaryCases = metrics.find(m => m.metric === 'Ongoing Disciplinary Cases').scoringAchieved;
 
-      // COO Remuneration
-      this.cooGuaranteedPackage = this.findMetricValue(metrics, 'COO Guaranteed Package');
-      this.cooShortTermIncentive = this.findMetricValue(metrics, 'COO Short-term incentive');
-      this.cooLongTermIncentive = this.findMetricValue(metrics, 'COO Long-term incentive');
-      this.cooTotalRemuneration = this.findMetricValue(metrics, 'COO Total remuneration');
-
-      // Ethics and Integrity
-      this.employeesCompletedEthicsTraining = this.findMetricValue(metrics, 'Employees Completed Ethics Training');
-      this.contractorsCompletedEthicsTraining = this.findMetricValue(metrics, 'Contractors Completed Ethics Training');
-      this.subsidiariesCompletedEthicsTraining = this.findMetricValue(metrics, 'Subsidiaries Completed Ethics Training');
-      this.reportedCases = this.findMetricValue(metrics, 'Reported Cases');
-      this.casesStillUnderInvestigation = this.findMetricValue(metrics, 'Cases Still Under Investigation');
-      this.substantiatedCases = this.findMetricValue(metrics, 'Substantiated Cases');
-      this.unsubstantiatedCases = this.findMetricValue(metrics, 'Unsubstantiated Cases');
-      this.disciplinaryCasesReported = this.findMetricValue(metrics, 'Disciplinary Cases Reported');
-      this.disciplinaryCasesConcluded = this.findMetricValue(metrics, 'Disciplinary Cases Concluded');
-      this.ethicalDisciplinaryCasesConcluded = this.findMetricValue(metrics, 'Ethical & Disciplinary Cases Concluded');
-      this.ongoingDisciplinaryCases = this.findMetricValue(metrics, 'Ongoing Disciplinary Cases');
-
-      // Additional Metrics
-      this.systemAvailability = this.findMetricValue(metrics, 'System Availability');
-      this.privacyRelatedIncidents = this.findMetricValue(metrics, 'Privacy Related Incidents');
-      this.privacyRelatedIncidentsReportedToRegulator = this.findMetricValue(metrics, 'Privacy Related Incidents Reported to Regulator');
-      },
+//     // Additional Metrics
+//     this.systemAvailability = metrics.find(m => m.metric === 'System Availability').scoringAchieved;
+//     this.privacyRelatedIncidents = metrics.find(m => m.metric === 'Privacy Related Incidents').scoringAchieved;
+//     this.privacyRelatedIncidentsReportedToRegulator = metrics.find(m => m.metric === 'Privacy Related Incidents Reported to Regulator').scoringAchieved;
+//   },
     // updateProsperityMetrics(metrics) {
     //   this.totalTaxPaid = metrics.find(m => m.Metric === 'Total tax paid').scoringAchieved;
     //   this.newEmployees = metrics.find(m => m.Metric === 'Absolute number of new employees').scoringAchieved;
@@ -684,8 +555,9 @@ export default {
     };
 
     try {
+      // No need to check for isApplicable anymore
       const extractedSocialMetrics = this.socialMetrics.reduce((acc, metric) => {
-        if (metric.isApplicable && metric.scoringAchieved.trim() !== '') { 
+        if (metric.scoringAchieved.trim() !== '') { 
           acc[metric.metric] = metric.scoringAchieved; 
         }
         return acc;
@@ -713,8 +585,9 @@ export default {
     };
 
     try {
+      // No need to check for isApplicable anymore
       const extractedEnvironmentalMetrics = this.environmentalMetrics.reduce((acc, metric) => {
-        if (metric.isApplicable && metric.scoringAchieved.trim() !== '') {
+        if (metric.scoringAchieved.trim() !== '') {
           acc[metric.metric] = metric.scoringAchieved; 
         }
         return acc;
@@ -742,8 +615,9 @@ export default {
     };
 
     try {
+      // No need to check for isApplicable anymore
       const extractedGovernanceMetrics = this.governanceMetrics.reduce((acc, metric) => {
-        if (metric.isApplicable && metric.scoringAchieved.trim() !== '') {
+        if (metric.scoringAchieved.trim() !== '') {
           acc[metric.metric] = metric.scoringAchieved; 
         }
         return acc;
@@ -915,17 +789,26 @@ export default {
   //   }
   // }
 
+  this.loading = true; // Start the loading spinner
+
+  try {
+    // Gather all metrics data
+    const data = {
+      social: this.socialMetrics,
+      environmental: this.environmentalMetrics,
+      governance: this.governanceMetrics
+    };
+
   const token = localStorage.getItem('access_token');
   const headers = {
     'Authorization': 'Bearer ' + token
   };
 
-  console.log("submitting");
-
-  this.loading = true; // Start the loading spinner
-
-  try {
-    const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), {}, { headers: headers });
+  
+    // const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), {}, { headers: headers });
+    const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), 
+      data, { headers: headers }
+    );
 
     if (response.data.success) {
       this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
@@ -941,30 +824,43 @@ export default {
 
 
 
+beforeChange(activeTabIndex, nextTabIndex) {
+  console.log('beforeChange function triggered');
+  console.log('Navigating from', activeTabIndex, 'to', nextTabIndex);
+
+  // No need for a switch statement anymore
+  if (activeTabIndex === 0) {
+    this.saveReportInfo();
+  } else if (activeTabIndex >= 1 && activeTabIndex <= 3) { // Social, Environmental, or Governance tab
+    this.saveMetrics(activeTabIndex); 
+  } 
+  // No need for case 5 (Review and Submit) as it doesn't save data on change
+},
 
 
-    beforeChange(activeTabIndex, nextTabIndex) {
-      console.log('beforeChange function triggered')
-      console.log('Navigating from', activeTabIndex, 'to', nextTabIndex);
-      switch (activeTabIndex) {
-        case 0: // Submission Info tab
-          this.saveReportInfo();
-          break;
-        case 1: // Social tab
-          this.saveSocialMetrics();
-          break;
-        case 2: // Environmental tab
-          this.saveEnvironmentalMetrics();
-          break;
-        case 3: // Governance tab
-          this.saveGovernanceMetrics();
-          this.fetchSubmissionData();
-          break;
-        case 5: // Review and Submit tab
 
-          break;
-      }
-    },
+    // beforeChange(activeTabIndex, nextTabIndex) {
+    //   console.log('beforeChange function triggered')
+    //   console.log('Navigating from', activeTabIndex, 'to', nextTabIndex);
+    //   switch (activeTabIndex) {
+    //     case 0: // Submission Info tab
+    //       this.saveReportInfo();
+    //       break;
+    //     case 1: // Social tab
+    //       this.saveSocialMetrics();
+    //       break;
+    //     case 2: // Environmental tab
+    //       this.saveEnvironmentalMetrics();
+    //       break;
+    //     case 3: // Governance tab
+    //       this.saveGovernanceMetrics();
+    //       this.fetchSubmissionData();
+    //       break;
+    //     case 5: // Review and Submit tab
+
+    //       break;
+    //   }
+    // },
 
 
     verifyCheckboxBeforeSubmit() {
@@ -1000,6 +896,54 @@ export default {
   //   }
   // },
 
+  async saveMetrics(tabIndex) {
+    try {
+      const token = localStorage.getItem('access_token');
+      const headers = {
+        'Authorization': 'Bearer ' + token
+      };
+
+      // Get the metrics data for the current tab
+      let metricsData;
+      let endpoint;
+      switch (tabIndex) {
+        case 1: 
+          metricsData = this.socialMetrics; 
+          endpoint = "/input_social_metrics/" + this.$route.query.submissionID; 
+          break;
+        case 2: 
+          metricsData = this.environmentalMetrics; 
+          endpoint = "/input_environmental_metrics/" + this.$route.query.submissionID; 
+          break;
+        case 3: 
+          metricsData = this.governanceMetrics; 
+          endpoint = "/input_governance_metrics/" + this.$route.query.submissionID; 
+          break;
+        default:
+          console.error('Invalid tab index in saveMetrics');
+          return;
+      }
+
+      const extractedMetrics = metricsData.reduce((acc, metric) => {
+        if (metric.scoringAchieved.trim() !== '') {
+          acc[metric.metric] = metric.scoringAchieved;
+        }
+        return acc;
+      }, {});
+
+      const response = await axios.post(config.backendApiUrl.concat(endpoint), extractedMetrics, { headers });
+
+      if (response.data.success) {
+        console.log('Metrics saved successfully:', response.data.message);
+      } else {
+        console.error('Error saving metrics:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error saving metrics:', error.message);
+    }
+  },
+
+
     async fetchSubmissionData() {
       const token = localStorage.getItem('access_token');
       const headers = {
@@ -1021,8 +965,7 @@ export default {
         console.error('Error fetching submission data:', error.message);
       }
     },
-  }
-};
+  }};
 
 </script>
 

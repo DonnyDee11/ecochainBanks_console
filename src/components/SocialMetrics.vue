@@ -3,20 +3,14 @@
       <v-table class="scrollable-table" style="width: 100%">
         <thead>
           <tr>
-            <td colspan="2" class="text-left text-no-wrap">
+            <td colspan="3" class="text-left text-no-wrap">
               Complete the sub-sections below by inputting the scoring achieved for each metric
-            </td>
-            <td colspan="1" class="text-left">
-              <input type="radio" v-model="allApplicable" value="true" />
-              Mark entire category as not applicable
             </td>
             <td></td>
           </tr>
           <tr>
             <th class="text-left">Sub-section</th>
             <th class="text-left">Metric</th>
-            <!-- <th class="text-left">Scoring</th>
-            <th class="text-left">Applicable</th> -->
             <th class="text-left">Scoring achieved</th>
           </tr>
         </thead>
@@ -25,22 +19,17 @@
           <tr v-for="(item, index) in metrics" :key="item.name">
             <td>{{ item.name }}</td>
             <td>{{ item.metric }}</td>
-            <!-- <td>
-              <a href="https://www.weforum.org/stakeholdercapitalism/our-metrics" target="_blank">
-                <i class="ti-eye"></i> View details and rationale
-              </a>
-            </td>
-            <td>
-              <v-switch v-model="item.isApplicable" @change="handleSwitchChange(item, index)" color="#219653"></v-switch>
-            </td> -->
             <td>
               <v-text-field 
               v-model="item.scoringAchieved" 
-              :disabled="!item.isApplicable" 
               variant="outlined" 
               style="margin-top: 16px; width: 100%;"
-              :prepend-inner-icon="prependIcon(index)"
-            ></v-text-field> 
+              
+            >
+            <template v-slot:prepend>
+              <span>{{ prependIcon(item.metric) }}</span>
+            </template>
+          </v-text-field> 
             </td>
           </tr>
         </tbody>
@@ -54,7 +43,6 @@
   
     data() {
       return {
-        allApplicable: false,
         metrics: [
           // Customer Satisfaction
           { name: 'Customer Satisfaction', metric: 'Customer Complaints', isApplicable: true, scoringAchieved: '' },
@@ -185,56 +173,44 @@
         ],
     }
 },
-// computed: {
-//     sectionStatus() {
-//       if (this.metrics.every(item => item.isApplicable)) {
-//         return 'Complete';
-//       } else if (this.metrics.every(item => !item.isApplicable)) {
-//         return 'Not Applicable';
-//       } else {
-//         return 'Partial';
-//       }
-//     }
-//   },
+
 
 computed: {
-    sectionStatus() {
-      // Check if all text fields have some value (not empty strings)
-      const allFieldsFilled = this.metrics.every(item => item.scoringAchieved.trim() !== '');
+  sectionStatus() {
+    const anyFieldFilled = this.metrics.some(item => item.scoringAchieved.trim() !== '');
+    const allFieldsFilled = this.metrics.every(item => item.scoringAchieved.trim() !== '');
 
-      if (allFieldsFilled) {
-        return 'Complete';
-      } else if (this.metrics.every(item => item.scoringAchieved.trim() === '')) {
-        return 'Not Started'; 
-      } else {
-        return 'Partial';
-      }
+    if (allFieldsFilled) {
+      return 'Complete';
+    } else if (anyFieldFilled) {  // Add this condition for "Partial"
+      return 'Partial';
+    } else {
+      return 'Not Started';
+    }
+  }
+},
+
+methods: {
+  prependIcon(metricName) {
+    // Customize prepend icon based on metric type
+    const numericalMetrics = [
+      'Customer Satisfaction Score', 'Employee Turnover Rate', 'Training and Development Spend per Employee',
+      'Lost Time Injury Frequency Rate', 'Employee Engagement Score', 'Average number of annual leave days taken by employees',
+      'Average number of sick leave days taken by employees', 'Total Basic Payroll (Rands)',
+      'Average annual salary - Unionized permanent employees (Rands)', 'Actual payment on bursaries', 
+      'Graduate Programme Absorption rate', 'Internal Promotional Success Rate',
+      'Total Procurement Spend', 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)',
+      'Total Procurement Spend on Qualifying Small Enterprises (QSEs)', 'Total Procurement Spend on 51% Black Owned Suppliers',
+      'Total Procurement Spend on 30% Black Women Owned Suppliers', 'Local Procurement Spend',
+      'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)'
+    ];
+
+    if (numericalMetrics.includes(metricName)) {
+      return '%'; 
+    } else {
+      return '#'; // No prepend icon for other metrics
     }
   },
-
-  methods: {
-    prependIcon(metricName) {
-      // Customize prepend icon based on metric type
-      const numericalMetrics = [
-        'Customer Satisfaction Score', 'Employee Turnover Rate', 'Training and Development Spend per Employee',
-        'Lost Time Injury Frequency Rate', 'Employee Engagement Score', 'Average number of annual leave days taken by employees',
-        'Average number of sick leave days taken by employees', 'Total Basic Payroll (Rands)',
-        'Average annual salary - Unionized permanent employees (Rands)', 'Actual payment on bursaries', 
-        'Graduate Programme Absorption rate', 'Internal Promotional Success Rate',
-        'Total Procurement Spend', 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)',
-        'Total Procurement Spend on Qualifying Small Enterprises (QSEs)', 'Total Procurement Spend on 51% Black Owned Suppliers',
-        'Total Procurement Spend on 30% Black Women Owned Suppliers', 'Local Procurement Spend',
-        'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)'
-      ];
-
-      if (numericalMetrics.includes(metricName)) {
-        return '#';
-      } else if (metricName === 'Gender Pay Gap') { // Assuming Gender Pay Gap might be textual or categorical
-        return ''; // No prepend icon
-      } else {
-        return ''; // Default to no icon for other metrics
-      }
-    },
 
     getInputComponent(metricName) {
       // Customize input component based on metric type
@@ -247,23 +223,20 @@ computed: {
       }
     },
 
-    handleSwitchChange(item, index) {
-      if (!item.isApplicable) {
-        this.metrics[index].scoringAchieved = '';
-      }
-    },
     
     saveMetricsToParent() {
-      this.$emit('updateSocialMetrics', this.metrics); 
-      console.log(this.metrics);
+      // Extract applicable metrics and their scores
+      const applicableMetrics = this.metrics.map(metric => ({
+        metric: metric.metric,
+        scoringAchieved: metric.scoringAchieved
+      }));
+
+      this.$emit('updateSocialMetrics', applicableMetrics); 
+      console.log(applicableMetrics);
     }
   },
 
   watch: {
-    allApplicable(newValue) {
-      const applicable = newValue === 'false';
-      this.metrics.forEach(item => (item.isApplicable = applicable));
-    },
     metrics: {
       deep: true,
       handler() {
@@ -307,5 +280,9 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.v-input__prepend-inner {
+  color: #219653; /* Or any color you prefer */
 }
 </style>
