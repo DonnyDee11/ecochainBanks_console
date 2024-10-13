@@ -17,8 +17,8 @@
   
         <tbody>
           <tr v-for="(item, index) in metrics" :key="item.name">
+            <td>{{ item.category }}</td>  
             <td>{{ item.name }}</td>
-            <td>{{ item.metric }}</td>
             <td>
               <v-text-field 
               v-model="item.scoringAchieved" 
@@ -45,131 +45,134 @@
       return {
         metrics: [
           // Customer Satisfaction
-          { name: 'Customer Satisfaction', metric: 'Customer Complaints', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Customer Satisfaction Score', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Customer Satisfaction', name: 'Customer Complaints', metric: 'CustomerComplaints', scoringAchieved: '' },
+          { category: '', name: 'Customer Satisfaction Score', metric: 'CustomerSatisfactionScore', scoringAchieved: '' },
+
           // Human Capital Development
-          { name: 'Human Capital Development', metric: 'Permanent Employees (Male)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Permanent Employees (Female)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Temporary Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Full-Time Employees (Male)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Full-Time Employees (Female)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Part-Time Employees (Male)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Part-Time Employees (Female)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Employee Turnover Rate', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training and Development Spend per Employee', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Lost Time Injury Frequency Rate', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Employee Engagement Score', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Gender Pay Gap', isApplicable: true, scoringAchieved: '' }, // Consider using a different input type here 
-  
+          { category: 'Human Capital Development', name: 'Permanent Employees (Male)', metric: 'PermanentEmployeesMale', scoringAchieved: '' },
+          { category: '', name: 'Permanent Employees (Female)', metric: 'PermanentEmployeesFemale', scoringAchieved: '' },
+          { category: '', name: 'Temporary Employees', metric: 'TemporaryEmployees', scoringAchieved: '' },
+          { category: '', name: 'Full-Time Employees (Male)', metric: 'FullTimeEmployeesMale', scoringAchieved: '' },
+          { category: '', name: 'Full-Time Employees (Female)', metric: 'FullTimeEmployeesFemale', scoringAchieved: '' },
+          { category: '', name: 'Part-Time Employees (Male)', metric: 'PartTimeEmployeesMale', scoringAchieved: '' },
+          { category: '', name: 'Part-Time Employees (Female)', metric: 'PartTimeEmployeesFemale', scoringAchieved: '' },
+          { category: '', name: 'Employee Turnover Rate', metric: 'EmployeeTurnoverRate', scoringAchieved: '' },
+          { category: '', name: 'Training and Development Spend per Employee', metric: 'TrainingAndDevelopmentSpendPerEmployee', scoringAchieved: '' },
+          { category: '', name: 'Lost Time Injury Frequency Rate', metric: 'LostTimeInjuryFrequencyRate', scoringAchieved: '' },
+          { category: '', name: 'Employee Engagement Score', metric: 'EmployeeEngagementScore', scoringAchieved: '' },
+          { category: '', name: 'Gender Pay Gap', metric: 'GenderPayGap', scoringAchieved: '' },
+
           // Training, Bursaries & Learnerships
-          { name: 'Training, Bursaries & Learnerships', metric: 'Total Training Spend', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Training Spend as % of Basic Payroll', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend per Employee', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of Training Beneficiaries', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Average Training Hours per Employee', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend on Black Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend on Black Female Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend on Black Female Employees with Disabilities', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend on Female Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Training Spend on Female Employees with Disabilities', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total number of internal bursaries awarded', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Actual payment on bursaries', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of learnerships/ internships offered to unemployed people and people with disabilities', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total number of learnerships and internships', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of learnership students absorbed into permanent employment in the company', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of employees who attended Management/Leadership Development Programmes', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Training, Bursaries & Learnerships', name: 'Total Training Spend', metric: 'TotalTrainingSpend', scoringAchieved: '' },
+          { category: '', name: 'Total Training Spend as % of Basic Payroll', metric: 'TotalTrainingSpendBasicPayroll', scoringAchieved: '' },
+          { category: '', name: 'Training Spend per Employee', metric: 'TrainingSpendPerEmployee', scoringAchieved: '' },
+          { category: '', name: 'Number of Training Beneficiaries', metric: 'TrainingBeneficiaries', scoringAchieved: '' },
+          { category: '', name: 'Average Training Hours per Employee', metric: 'AverageTrainingHours', scoringAchieved: '' },
+          { category: '', name: 'Training Spend on Black Employees', metric: 'TrainingSpendBlackEmployees', scoringAchieved: '' },
+          { category: '', name: 'Training Spend on Black Female Employees', metric: 'TrainingSpendBlackFemaleEmployees', scoringAchieved: '' },
+          { category: '', name: 'Training Spend on Black Female Employees with Disabilities', metric: 'TrainingSpendBlackFemaleEmployeesWithDisabilities', scoringAchieved: '' },
+          { category: '', name: 'Training Spend on Female Employees', metric: 'TrainingSpendFemaleEmployees', scoringAchieved: '' },
+          { category: '', name: 'Training Spend on Female Employees with Disabilities', metric: 'TrainingSpendFemaleEmployeesWithDisabilities', scoringAchieved: '' },
+          { category: '', name: 'Total number of internal bursaries awarded', metric: 'TotalInternalBursaries', scoringAchieved: '' },
+          { category: '', name: 'Actual payment on bursaries', metric: 'ActualPaymentOnBursaries', scoringAchieved: '' },
+          { category: '', name: 'Number of learnerships/ internships offered to unemployed people and people with disabilities', metric: 'LearnershipOfferedToUnemployedAndDisabled', scoringAchieved: '' },
+          { category: '', name: 'Total number of learnerships and internships', metric: 'LearnershipsAndInternships', scoringAchieved: '' },
+          { category: '', name: 'Number of learnership students absorbed into permanent employment in the company', metric: 'LearnershipStudentsAdsorbedIntoEmployment', scoringAchieved: '' },
+          { category: '', name: 'Number of employees who attended Management/Leadership Development Programmes', metric: 'NumberEmployeesAttendedManagementLeadership', scoringAchieved: '' },
+
           // Graduate Programme
-          { name: 'Graduate Programme', metric: 'Total Graduate Programme Intake', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Graduate Programme Intake (Female)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Graduate Programme Absorption', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Graduate Programme Absorption rate', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Graduate Programme', name: 'Total Graduate Programme Intake', metric: 'TotalGraduateProgramIntake', scoringAchieved: '' },
+          { category: '', name: 'Graduate Programme Intake (Female)', metric: 'GraduateProgramIntakeFemale', scoringAchieved: '' },
+          { category: '', name: 'Total Graduate Programme Absorption', metric: 'TotalGraduateProgramAbsorption', scoringAchieved: '' },
+          { category: '', name: 'Graduate Programme Absorption rate', metric: 'GraduateProgramAbsorptionRate', scoringAchieved: '' },
+
           // Employee Profile & Movements
-          { name: 'Employee Profile & Movements', metric: 'Total Number of Employees (beginning of the year)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Number of Employees (end of the year)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'New Hires (Permanent Employees)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'New Hires (Permanent Employees) with 3 months\' probation', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Temporary Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Terminations (Permanent Employees)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Resignations', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Voluntary Retrenchments', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Involuntary Retrenchments', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Dismissals', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Non-Temporary Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Employee Internal Transfers', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Vacancies Filled by Internal Candidates', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Internal Promotional Success Rate', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Employee Promotions', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'New Hires (Women)', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Employee Profile & Movements', name: 'Total Number of Employees (beginning of the year)', metric: 'TotalNumberOfEmployeesBeginningYear', scoringAchieved: '' },
+          { category: '', name: 'Total Number of Employees (end of the year)', metric: 'TotalNumberOfEmployeesEndOfYear', scoringAchieved: '' },
+          { category: '', name: 'New Hires (Permanent Employees)', metric: 'NewHiresPermanentEmployees', scoringAchieved: '' },
+          { category: '', name: 'New Hires (Permanent Employees) with 3 months\' probation', metric: 'NewHiresPermanentEmployeesWith3MonthsProbation', scoringAchieved: '' },
+          { category: '', name: 'Temporary Employees', metric: 'TemporaryEmployees', scoringAchieved: '' },
+          { category: '', name: 'Terminations (Permanent Employees)', metric: 'TerminationsPermanentEmployees', scoringAchieved: '' },
+          { category: '', name: 'Resignations', metric: 'Resignations', scoringAchieved: '' },
+          { category: '', name: 'Voluntary Retrenchments', metric: 'VoluntaryRetrenchments', scoringAchieved: '' },
+          { category: '', name: 'Involuntary Retrenchments', metric: 'InvoluntaryRetrenchments', scoringAchieved: '' },
+          { category: '', name: 'Dismissals', metric: 'Dismissals', scoringAchieved: '' },
+          { category: '', name: 'Non-Temporary Employees', metric: 'NonTemporaryEmployees', scoringAchieved: '' },
+          { category: '', name: 'Total Employee Internal Transfers', metric: 'TotalEmployeeInternalTransfers', scoringAchieved: '' },
+          { category: '', name: 'Vacancies Filled by Internal Candidates', metric: 'VacanciesFilledByInternalCandidates', scoringAchieved: '' },
+          { category: '', name: 'Internal Promotional Success Rate', metric: 'InternalPromotionalSuccessRate', scoringAchieved: '' },
+          { category: '', name: 'Total Employee Promotions', metric: 'TotalEmployeePromotions', scoringAchieved: '' },
+          { category: '', name: 'New Hires (Women)', metric: 'NewHiresWomen', scoringAchieved: '' },
+
           // Per Region
-          { name: 'Per Region', metric: 'South African Employees (Male)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'South African Employees (Female)', isApplicable: true, scoringAchieved: '' },
+          { category: 'Per Region', name: 'South African Employees (Male)', metric: 'SouthAfricanEmployeesMale', scoringAchieved: '' },
+          { category: '', name: 'South African Employees (Female)', metric: 'SouthAfricanEmployeesFemale', scoringAchieved: '' },
+          { category: '', name: 'International Employees (Male)', metric: 'InternationalEmployeesMale', scoringAchieved: '' },
+          { category: '', name: 'International Employees (Female)', metric: 'InternationalEmployeesFemale', scoringAchieved: '' },
 
           // Employee Equity Demographics
-          { name: 'Employee Equity Demographics', metric: 'Black Female Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Coloured Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Indian Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Asian Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'White Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Male Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Female Employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Disability Representation (Number of Employees)', isApplicable: true, scoringAchieved: '' },
+          { category: 'Employee Equity Demographics', name: 'Black Female Employees', metric: 'BlackFemaleEmployees', scoringAchieved: '' },
+          { category: '', name: 'Coloured Employees', metric: 'ColouredEmployees', scoringAchieved: '' },
+          { category: '', name: 'Indian Employees', metric: 'IndianEmployees', scoringAchieved: '' },
+          { category: '', name: 'Asian Employees', metric: 'AsianEmployees', scoringAchieved: '' },
+          { category: '', name: 'White Employees', metric: 'WhiteEmployees', scoringAchieved: '' },
+          { category: '', name: 'Male Employees', metric: 'MaleEmployees', scoringAchieved: '' },
+          { category: '', name: 'Female Employees', metric: 'FemaleEmployees', scoringAchieved: '' },
+          { category: '', name: 'Disability Representation (Number of Employees)', metric: 'DisabilityRepresentationNumberOfEmployees', scoringAchieved: '' },
 
           // Per Disability Type
-          { name: 'Per Disability Type', metric: 'Sensory', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Physical', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Mental', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Multiple', isApplicable: true, scoringAchieved: '' },
+          { category: 'Per Disability Type', name: 'Sensory', metric: 'SensoryDisability', scoringAchieved: '' },
+          { category: '', name: 'Physical', metric: 'PhysicalDisability', scoringAchieved: '' },
+          { category: '', name: 'Mental', metric: 'MentalDisability', scoringAchieved: '' },
+          { category: '', name: 'Multiple', metric: 'MultipleDisabilities', scoringAchieved: '' },
 
           // Additional Labor Statistics
-          { name: 'Additional Labor Statistics', metric: 'Employee Costs and Benefits', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Basic Payroll (Rands)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Average annual salary - Unionized permanent employees (Rands)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of unionised employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of retrenched individuals', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Average number of annual leave days taken by employees', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Average number of sick leave days taken by employees', isApplicable: true, scoringAchieved: '' },
+          // Additional Labor Statistics
+          { category: 'Additional Labor Statistics', name: 'Employee Costs and Benefits', metric: 'EmployeeCostsAndBenefits', scoringAchieved: '' },
+          { category: '', name: 'Total Basic Payroll (Rands)', metric: 'TotalBasicPayrollRands', scoringAchieved: '' },
+          { category: '', name: 'Average annual salary - Unionized permanent employees (Rands)', metric: 'AnnualSalaryUnionizedEmployees', scoringAchieved: '' },
+          { category: '', name: 'Number of unionised employees', metric: 'UnionizedEmployees', scoringAchieved: '' },
+          { category: '', name: 'Number of retrenched individuals', metric: 'RetrenchedIndividuals', scoringAchieved: '' },
+          { category: '', name: 'Average number of annual leave days taken by employees', metric: 'AverageAnnualLeaveDaysTaken', scoringAchieved: '' },
+          { category: '', name: 'Average number of sick leave days taken by employees', metric: 'AverageSickLeaveDaysTaken', scoringAchieved: '' },
 
           // Incident Reporting
-          { name: 'Incident Reporting', metric: 'Number of employee grievances reported', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of incidents of misconduct that have been reported in the year', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of medical incidents that have occurred during the year', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of workmen\'s compensation claims', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of people injured in work-related incidents', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of fatalities (bank members)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Number of fatalities (non-bank members)', isApplicable: true, scoringAchieved: '' },
+          { category: 'Incident Reporting', name: 'Number of employee grievances reported', metric: 'EmployeeGrievances', scoringAchieved: '' },
+          { category: '', name: 'Number of incidents of misconduct that have been reported in the year', metric: 'IncidentsOfMisconduct', scoringAchieved: '' },
+          { category: '', name: 'Number of medical incidents that have occurred during the year', metric: 'MedicalIncidents', scoringAchieved: '' },
+          { category: '', name: 'Number of workmen\'s compensation claims', metric: 'WorkmensCompensationClaims', scoringAchieved: '' },
+          { category: '', name: 'Number of people injured in work-related incidents', metric: 'NumberInjured', scoringAchieved: '' },
+          { category: '', name: 'Number of fatalities (bank members)', metric: 'NumberofFatalitiesBankMembers', scoringAchieved: '' },
+          { category: '', name: 'Number of fatalities (non-bank members)', metric: 'NumberofFatalitiesNonBankMembers', scoringAchieved: '' },
 
           // Financial Inclusion
-          { name: 'Financial Inclusion', metric: 'Mortgage Loans Granted', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Mortgage Loans Value (Total)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Mortgage Loans (Affordable Housing) (Total)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Mortgage Loans (Affordable Housing) (Value Total)', isApplicable: true, scoringAchieved: '' },
+          { category: 'Financial Inclusion', name: 'Mortgage Loans Granted', metric: 'MortgageLoansGranted', scoringAchieved: '' },
+          { category: '', name: 'Mortgage Loans Value (Total)', metric: 'MortgageLoansValueTotal', scoringAchieved: '' },
+          { category: '', name: 'Mortgage Loans (Affordable Housing) (Total)', metric: 'MortgageLoansAffordableHousingTotal', scoringAchieved: '' },
+          { category: '', name: 'Mortgage Loans (Affordable Housing) (Value Total)', metric: 'MortgageLoansAffordableHousingValueTotal', scoringAchieved: '' },
 
           // Physical Footprint
-          { name: 'Physical Footprint', metric: 'Outlets', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'ATMs', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'POS Devices', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Clients', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Digitally Active Clients', isApplicable: true, scoringAchieved: '' },
+          { category: 'Physical Footprint', name: 'Outlets', metric: 'Outlets', scoringAchieved: '' },
+          { category: '', name: 'ATMs', metric: 'ATMs', scoringAchieved: '' },
+          { category: '', name: 'POS Devices', metric: 'POSDevices', scoringAchieved: '' },
+          { category: '', name: 'Total Clients', metric: 'TotalClients', scoringAchieved: '' },
+          { category: '', name: 'Digitally Active Clients', metric: 'DigitallyActiveClients', scoringAchieved: '' },
 
           // Digital Footprint
-          { name: 'Digital Footprint', metric: 'Digitally Active Clients', isApplicable: true, scoringAchieved: '' },
+          { category: 'Digital Footprint', name: 'Digitally Active Clients', metric: 'DigitallyActiveClients', scoringAchieved: '' },
 
           // Suppliers
-          { name: 'Suppliers', metric: 'Total Number of Suppliers', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Procurement Spend', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Procurement Spend on Qualifying Small Enterprises (QSEs)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Procurement Spend on 51% Black Owned Suppliers', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Procurement Spend on 30% Black Women Owned Suppliers', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Local Procurement Spend', isApplicable: true, scoringAchieved: '' },
+          { category: 'Suppliers', name: 'Total Number of Suppliers', metric: 'TotalNumberSuppliers', scoringAchieved: '' },
+          { category: '', name: 'Total Procurement Spend', metric: 'TotalProcurementSpend', scoringAchieved: '' },
+          { category: '', name: 'Total Procurement Spend on Exempt Micro Enterprises (EMEs)', metric: 'TotalProcurementSpendExemptMicroenterprises', scoringAchieved: '' },
+          { category: '', name: 'Total Procurement Spend on Qualifying Small Enterprises (QSEs)', metric: 'TotalProcurementSpendQualifyingSmallEnterprises', scoringAchieved: '' },
+          { category: '', name: 'Total Procurement Spend on 51% Black Owned Suppliers', metric: 'TotalProcurementSpend51PercentBlackOwned', scoringAchieved: '' },
+          { category: '', name: 'Total Procurement Spend on 30% Black Women Owned Suppliers', metric: 'TotalProcurementSpend30PercentBlackOwned', scoringAchieved: '' },
+          { category: '', name: 'Local Procurement Spend', metric: 'LocalProcurementSpend', scoringAchieved: '' },
 
           // Regulators
-          { name: 'Regulators', metric: 'Total Number of environmental incidents (Level 1 + Level 2 + Level 3)', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)', isApplicable: true, scoringAchieved: '' },
+          { category: 'Regulators', name: 'Total Number of environmental incidents (Level 1 + Level 2 + Level 3)', metric: 'TotalEnvironmentalIncidents', scoringAchieved: '' },
+          { category: '', name: 'Total value of environmental fines and penalties (Level 1 + Level 2 + Level 3)', metric: 'TotalEnvironmentalFines', scoringAchieved: '' },
         ],
     }
 },

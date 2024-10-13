@@ -44,99 +44,97 @@
       return {
         allApplicable: false,
         metrics: [
-          // Board composition & diversity
-          { name: 'Board composition & diversity', metric: 'Number of Board Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Independent Non-Executive Directors', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Executive Directors', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Non-Executive Directors', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Independent Board Chairman', isApplicable: true, scoringAchieved: '' },  // Consider using v-select or checkbox here
-          { name: '', metric: 'Black, Asian and Coloured (ACI) Executive Board Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Black, Asian and Coloured (ACI) Women Executive Board Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Black, Asian and Coloured (ACI) Independent Non-Executive Board Members', isApplicable: true, scoringAchieved: '' },
-  
+      // Board composition & diversity
+          { category: 'Board composition & diversity', name: 'Number of Board Members', metric: 'NumberOfBoardMembers', scoringAchieved: '' },
+          { category: '', name: 'Independent Non-Executive Directors', metric: 'IndependentNonExecutiveDirectors', scoringAchieved: '' },
+          { category: '', name: 'Executive Directors', metric: 'ExecutiveDirectors', scoringAchieved: '' },
+          { category: '', name: 'Non-Executive Directors', metric: 'NonExecutiveDirectors', scoringAchieved: '' },
+          { category: '', name: 'Independent Board Chairman', metric: 'IndependentBoardChairman', scoringAchieved: '' },
+          { category: '', name: 'Black, Asian and Coloured (ACI) Executive Board Members', metric: 'BlackACIExecutiveBoardMembers', scoringAchieved: '' },
+          { category: '', name: 'Black, Asian and Coloured (ACI) Women Executive Board Members', metric: 'BlackACIWomenExecutiveBoardMembers', scoringAchieved: '' },
+          { category: '', name: 'Black, Asian and Coloured (ACI) Independent Non-Executive Board Members', metric: 'BlackACIIndependentNonExecutiveBoardMembers', scoringAchieved: '' },
+
           // Board Effectiveness 
-          { name: 'Board Effectiveness', metric: 'Total Number of Board Meetings', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Training Hours', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Board Effectiveness', name: 'Total Number of Board Meetings', metric: 'TotalNumberOfBoardMeetings', scoringAchieved: '' },
+          { category: '', name: 'Board Training Hours', metric: 'BoardTrainingHours', scoringAchieved: '' },
+
           // Workforce Diversity
-          { name: 'Workforce Diversity', metric: 'White Males', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'White Females', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'ACI Females', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'ACI Males', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Non SA Board Members', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Workforce Diversity', name: 'White Males', metric: 'WhiteMales', scoringAchieved: '' },
+          { category: '', name: 'White Females', metric: 'WhiteFemales', scoringAchieved: '' },
+          { category: '', name: 'ACI Females', metric: 'ACIFemales', scoringAchieved: '' },
+          { category: '', name: 'ACI Males', metric: 'ACIMales', scoringAchieved: '' },
+          { category: '', name: 'Non SA Board Members', metric: 'NonSABoardMembers', scoringAchieved: '' },
+
           // Board Member Tenure and Age
-          { name: 'Board Member Tenure and Age', metric: 'Board Members < 1 year', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 1 to 3 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 4 to 6 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 7 to 9 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members > 9 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 40 to 49 Years Age', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 50 to 59 Years Age', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 60 to 69 Years Age', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Board Members 70+', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Board Member Tenure and Age', name: 'Board Members < 1 year', metric: 'BoardMembersLessThan1Year', scoringAchieved: '' },
+          { category: '', name: 'Board Members 1 to 3 Years', metric: 'BoardMembers1To3Years', scoringAchieved: '' },
+          { category: '', name: 'Board Members 4 to 6 Years', metric: 'BoardMembers4To6Years', scoringAchieved: '' },
+          { category: '', name: 'Board Members 7 to 9 Years', metric: 'BoardMembers7To9Years', scoringAchieved: '' },
+          { category: '', name: 'Board Members > 9 Years', metric: 'BoardMembersMoreThan9Years', scoringAchieved: '' },
+          { category: '', name: 'Board Members 40 to 49 Years Age', metric: 'BoardMembers40To49YearsAge', scoringAchieved: '' },
+          { category: '', name: 'Board Members 50 to 59 Years Age', metric: 'BoardMembers50To59YearsAge', scoringAchieved: '' },
+          { category: '', name: 'Board Members 60 to 69 Years Age', metric: 'BoardMembers60To69YearsAge', scoringAchieved: '' },
+          { category: '', name: 'Board Members 70+', metric: 'BoardMembers70Plus', scoringAchieved: '' },
+
           // Executive Management 
-          { name: 'Executive Management', metric: 'Total Number of Exco Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Executive Directors on Exco', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Prescribed Officers', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Ex Officio Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Women Exco Members', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'ACI Exco Members', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Executive Management', name: 'Total Number of Exco Members', metric: 'TotalNumberOfExcoMembers', scoringAchieved: '' },
+          { category: '', name: 'Executive Directors on Exco', metric: 'ExecutiveDirectorsExco', scoringAchieved: '' },
+          { category: '', name: 'Prescribed Officers', metric: 'PrescribedOfficers', scoringAchieved: '' },
+          { category: '', name: 'Ex Officio Members', metric: 'ExOfficioMembers', scoringAchieved: '' },
+          { category: '', name: 'Women Exco Members', metric: 'WomenExcoMembers', scoringAchieved: '' },
+          { category: '', name: 'ACI Exco Members', metric: 'ACIExcoMembers', scoringAchieved: '' },
+
           // Executive Management Tenure
-          { name: 'Executive Management Tenure', metric: 'Exco Members 0 to 3 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Exco Members 4 to 6 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Exco Members 7 to 9 Years', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Executive Management Tenure', name: 'Exco Members 0 to 3 Years', metric: 'ExcoMembers0To3Years', scoringAchieved: '' },
+          { category: '', name: 'Exco Members 4 to 6 Years', metric: 'ExcoMembers4To6Years', scoringAchieved: '' },
+          { category: '', name: 'Exco Members 7 to 9 Years', metric: 'ExcoMembers7To9Years', scoringAchieved: '' },
+
           // Executive Management Bank Tenure 
-          { name: 'Executive Management Bank Tenure', metric: 'Exco Members 0 to 10 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Exco Members 11 to 20 Years', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Exco Members > 20 Years', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'Executive Management Bank Tenure', name: 'Exco Members 0 to 10 Years', metric: 'ExcoMembers0To10Years', scoringAchieved: '' },
+          { category: '', name: 'Exco Members 11 to 20 Years', metric: 'ExcoMembers11To20Years', scoringAchieved: '' },
+          { category: '', name: 'Exco Members > 20 Years', metric: 'ExcoMembersMoreThan20Years', scoringAchieved: '' },
+
           // Shareholder Rights
-          { name: 'Shareholder Rights', metric: 'Controlling Shareholder', isApplicable: true, scoringAchieved: '' },  // Consider using v-select or checkbox here
-          { name: '', metric: 'Multiple Shareholder Rights', isApplicable: true, scoringAchieved: '' },  // Consider using v-select or checkbox here
-  
+          { category: 'Shareholder Rights', name: 'Controlling Shareholder', metric: 'ControllingShareholder', scoringAchieved: '' },
+          { category: '', name: 'Multiple Shareholder Rights', metric: 'MultipleShareholderRights', scoringAchieved: '' },
+
           // CEO Shareholding
-          { name: 'CEO Shareholding', metric: 'Beneficial Shares (Direct Ownership) - CEO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Beneficial Shares (Indirect Ownership) - CEO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Shares Owned - CEO', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'CEO Shareholding', name: 'Beneficial Shares (Direct Ownership) - CEO', metric: 'BeneficialSharesDirectOwnershipCEO', scoringAchieved: '' },
+          { category: '', name: 'Beneficial Shares (Indirect Ownership) - CEO', metric: 'BeneficialSharesIndirectOwnershipCEO', scoringAchieved: '' },
+          { category: '', name: 'Total Shares Owned - CEO', metric: 'TotalSharesOwnedCEO', scoringAchieved: '' },
+
           // CFO Shareholding
-          { name: 'CFO Shareholding', metric: 'Beneficial Shares (Direct Ownership) - CFO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Beneficial Shares (Indirect Ownership) - CFO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Shares Owned - CFO', isApplicable: true, scoringAchieved: '' },
-  
+          { category: 'CFO Shareholding', name: 'Beneficial Shares (Direct Ownership) - CFO', metric: 'BeneficialSharesDirectOwnershipCFO', scoringAchieved: '' },
+          { category: '', name: 'Beneficial Shares (Indirect Ownership) - CFO', metric: 'BeneficialSharesIndirectOwnershipCFO', scoringAchieved: '' },
+          { category: '', name: 'Total Shares Owned - CFO', metric: 'TotalSharesOwnedCFO', scoringAchieved: '' },
+
           // COO Shareholding
-          { name: 'COO Shareholding', metric: 'Beneficial Shares (Direct Ownership) - COO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Beneficial Shares (Indirect Ownership) - COO', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Total Shares Owned - COO', isApplicable: true, scoringAchieved: '' },
+          { category: 'COO Shareholding', name: 'Beneficial Shares (Direct Ownership) - COO', metric: 'BeneficialSharesDirectOwnershipCOO', scoringAchieved: '' },
+          { category: '', name: 'Beneficial Shares (Indirect Ownership) - COO', metric: 'BeneficialSharesIndirectOwnershipCOO', scoringAchieved: '' },
+          { category: '', name: 'Total Shares Owned - COO', metric: 'TotalSharesOwnedCOO', scoringAchieved: '' },
 
           // Ethics and Integrity
-          { name: 'Ethics and integrity', metric: 'Employees Completed Ethics Training', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Contractors Completed Ethics Training', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Subsidiaries Completed Ethics Training', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Reported Cases', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Cases Still Under Investigation', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Substantiated Cases', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Unsubstantiated Cases', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Disciplinary Cases Reported', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Disciplinary Cases Concluded', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Ethical & Disciplinary Cases Concluded', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Ongoing Disciplinary Cases', isApplicable: true, scoringAchieved: '' },
-          
+          { category: 'Ethics and integrity', name: 'Employees Completed Ethics Training', metric: 'EmployeesCompletedEthicsTraining', scoringAchieved: '' },
+          { category: '', name: 'Contractors Completed Ethics Training', metric: 'ContractorsCompletedEthicsTraining', scoringAchieved: '' },
+          { category: '', name: 'Subsidiaries Completed Ethics Training', metric: 'SubsidiariesCompletedEthicsTraining', scoringAchieved: '' },
+          { category: '', name: 'Reported Cases', metric: 'ReportedCases', scoringAchieved: '' },
+          { category: '', name: 'Cases Still Under Investigation', metric: 'CasesStillUnderInvestigation', scoringAchieved: '' },
+          { category: '', name: 'Substantiated Cases', metric: 'SubstantiatedCases', scoringAchieved: '' },
+          { category: '', name: 'Unsubstantiated Cases', metric: 'UnsubstantiatedCases', scoringAchieved: '' },
+          { category: '', name: 'Disciplinary Cases Reported', metric: 'DisciplinaryCasesReported', scoringAchieved: '' },
+          { category: '', name: 'Disciplinary Cases Concluded', metric: 'DisciplinaryCasesConcluded', scoringAchieved: '' },
+          { category: '', name: 'Ethical & Disciplinary Cases Concluded', metric: 'EthicalDisciplinaryCasesConcluded', scoringAchieved: '' },
+          { category: '', name: 'Ongoing Disciplinary Cases', metric: 'OngoingDisciplinaryCases', scoringAchieved: '' },
+
           // Additional Metrics
-          { name: 'Additional Metrics', metric: 'System Availability', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Privacy Related Incidents', isApplicable: true, scoringAchieved: '' },
-          { name: '', metric: 'Privacy Related Incidents Reported to Regulator', isApplicable: true, scoringAchieved: '' },
+          { category: 'Additional Metrics', name: 'System Availability', metric: 'SystemAvailability', scoringAchieved: '' },
+          { category: '', name: 'Privacy Related Incidents', metric: 'PrivacyRelatedIncidents', scoringAchieved: '' },
+          { category: '', name: 'Privacy Related Incidents Reported to Regulator', metric: 'PrivacyRelatedIncidentsReportedToRegulator', scoringAchieved: '' },
         ],
     }
 },
 
 computed: {
-    
-    
     sectionStatus() {
     const anyFieldFilled = this.metrics.some(item => item.scoringAchieved.trim() !== '');
     const allFieldsFilled = this.metrics.every(item => item.scoringAchieved.trim() !== '');
@@ -151,21 +149,20 @@ computed: {
   }
 },
 
+methods: {
+    prependIcon(metricName) {
+      const percentageMetrics = [
+        'SystemAvailability',
+      ];
 
-      prependIcon(metricName) {
-    const percentageMetrics = [
-      'System Availability',
-      'Gender Diversity on Board',
-      'Internal Promotional Success Rate',
-    ];
+      if (percentageMetrics.includes(metricName)) {
+        return '%';
+      } else {
+        return '#';
+      }
+    },
 
-    if (percentageMetrics.includes(metricName)) {
-      return '%';
-    } else {
-      return '#';
-    }
-  },
-  saveMetricsToParent() {  // Renamed from updateGovernanceMetricsToParent
+    saveMetricsToParent() {  // Renamed from updateGovernanceMetricsToParent
     // Extract applicable metrics and their scores
     const applicableMetrics = this.metrics.map(metric => ({
       metric: metric.metric,
@@ -175,6 +172,7 @@ computed: {
     this.$emit('updateGovernanceMetrics', applicableMetrics); 
     console.log(applicableMetrics);
   },
+  },
 
 
 watch: {
@@ -183,7 +181,9 @@ watch: {
     handler() {
       this.saveMetricsToParent();  // Call the renamed method
     }
-  }}}        
+  },
+}
+}        
 </script>
 
 <style scoped>
