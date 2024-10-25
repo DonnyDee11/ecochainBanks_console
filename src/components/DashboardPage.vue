@@ -1,6 +1,5 @@
 <template>
 	<div>
-
 		<v-container>
 
 			<v-table>

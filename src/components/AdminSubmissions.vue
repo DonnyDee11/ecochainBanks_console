@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-container>
       <h1>Admin - All Submissions</h1>
   
       <v-table v-if="submissions.length > 0">  
@@ -20,10 +21,15 @@
             </tr>
         </tbody>
       </v-table>
+
+      <div v-else-if="isLoading"> 
+      <v-progress-circular indeterminate color="primary"></v-progress-circular> 
+    </div>
   
       <div v-else> 
         <p>No submissions found.</p> 
       </div>
+    </v-container>
     </div>
   </template>
   
@@ -34,7 +40,9 @@
   export default {
     data() {
       return {
-        submissions: []
+        submissions: [],
+        isLoading: true,  // Add a loading state
+        error: null  // To store any error messages
       };
     },
     mounted() {
@@ -53,8 +61,11 @@
           this.submissions = response.data; 
         } catch (error) {
           console.error('Error fetching submissions:', error);
-          // Handle error, e.g., display an error message to the user
-        }
+          this.error = "Failed to fetch submissions. Please try again later."; // Set error message
+        // You could add more specific error handling based on error.response.status
+      } finally {
+        this.isLoading = false;  // Set loading state to false after the request is complete
+      }
       }
     }
   };
