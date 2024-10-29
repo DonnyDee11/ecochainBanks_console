@@ -103,7 +103,7 @@ export default {
 					// 
 					// Check if the user has the admin role (assuming your backend sends this information)
 					if (response.data.role === 'admin') { 
-						this.$router.push('/admin/submissions'); // Redirect admin to AdminSubmissions page
+						this.$router.push('/AdminSubmissions'); // Redirect admin to AdminSubmissions page
 						} else {
 							this.$router.push('/dashboard'); // Redirect other users to the dashboard
 							};

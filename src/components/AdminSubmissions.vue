@@ -16,7 +16,7 @@
           <tr v-for="submission in submissions" :key="submission.SubmissionID">
             <td>{{ submission.SubmissionID }}</td>
             <td>{{ submission.UserID }}</td>
-            <td>{{ submission.Status }}</td> 
+            <td>{{ getStatusText(submission.Status) }}</td> 
             <td>{{ submission.Date }}</td>
             </tr>
         </tbody>
@@ -66,7 +66,17 @@
       } finally {
         this.isLoading = false;  // Set loading state to false after the request is complete
       }
-      }
+      },
+      getStatusText(status) {
+			switch (status) {
+				case 0: return 'In Progress';
+				case 1: return 'Pending';
+				case 2: return 'Complete';
+				case 3: return 'Rejected';
+				case 4: return 'Rejected at BaaS';
+				default: return 'Unknown';
+			}
+		}
     }
   };
   </script>
