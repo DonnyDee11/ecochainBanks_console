@@ -15,6 +15,7 @@ import SignUp from '../components/SignUpForm.vue';
 import SuccessPage from  '../components/SuccessPage.vue'; 
 import OrganisationForm from '../components/OrganisationForm.vue';
 import AdminSubmissions from '../components/AdminSubmissions.vue'
+import AuditorSubmissions from '../components/AuditorSubmissions.vue'
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     path: '/AdminSubmissions',
     name: 'AdminSubmissions',
     component: AdminSubmissions
+  },
+  {
+    path: '/AuditorSubmissions',
+    name: 'AuditorSubmissions',
+    component: AuditorSubmissions
   },
 
 ];

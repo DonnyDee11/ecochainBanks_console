@@ -43,7 +43,16 @@
 							<label>Re-type Password</label>
 							<v-text-field class="rounded-border" v-model="confirmPassword" type="password"
 								:rules="confirmPasswordRules" placeholder="Re-enter your password"
-								append-inner-icon="mdi-lock-outline" v-bind="commonProps" required></v-text-field>
+								append-inner-icon="mdi-lock-outline" v-bind="commonProps" required>
+							</v-text-field>
+						</v-col>
+
+						<v-col cols="12"> 
+							<label>Role</label> 
+							<v-radio-group v-model="selectedRole" row> 
+								<v-radio label="User" value="user"></v-radio> 
+								<v-radio label="Auditor" value="auditor"></v-radio> 
+							</v-radio-group>
 						</v-col>
 
 						<v-row class="mt-3">
@@ -100,7 +109,8 @@ export default {
 				value => !!value || 'Please type password.',
 				value => value.length >= 6 || 'Minimum 6 characters',
 			],
-			isLoading:false
+			isLoading:false,
+			selectedRole: 'user',  // Default role to 'user'
 		};
 	},
 	components: {
@@ -125,7 +135,8 @@ export default {
             const response = await axios.post(config.backendApiUrl.concat("/register"), {
                 email: this.email,
                 password: this.password,
-                name: this.Organisation_name
+                name: this.Organisation_name,
+				role: this.selectedRole  // Include the selected role in the payload
             });
 
             console.log('Response from backend:', response.data);

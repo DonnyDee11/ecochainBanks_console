@@ -101,12 +101,14 @@ export default {
 					console.log("Login successful. Redirecting...");
 					localStorage.setItem('access_token', response.data.access_token);
 					// 
-					// Check if the user has the admin role (assuming your backend sends this information)
-					if (response.data.role === 'admin') { 
-						this.$router.push('/AdminSubmissions'); // Redirect admin to AdminSubmissions page
-						} else {
-							this.$router.push('/dashboard'); // Redirect other users to the dashboard
-							};
+					// Check the user's role and redirect accordingly
+					if (response.data.role === 'admin') {
+						this.$router.push('/AdminSubmissions'); 
+					} else if (response.data.role === 'auditor') {
+						this.$router.push('/AuditorSubmissions'); 
+					} else {
+						this.$router.push('/dashboard'); 
+					}
 				} else {
 					this.errors.push(response.data.message || "An error occurred during login.");
 				}

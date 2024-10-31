@@ -1,48 +1,43 @@
 <template>
     <div>
-        <v-container>
-      <h1>Admin - All Submissions</h1>
+      <h1>Auditor - Pending Submissions</h1>
   
-      <v-table v-if="submissions.length > 0">  
+      <v-table v-if="submissions.length > 0">
         <thead>
           <tr>
             <th>Submission ID</th>
             <th>User ID</th>
-            <th>Status</th>
             <th>Date</th>
-            </tr>
+            <th>Actions</th> 
+          </tr>
         </thead>
         <tbody>
           <tr v-for="submission in submissions" :key="submission.SubmissionID">
             <td>{{ submission.SubmissionID }}</td>
             <td>{{ submission.UserID }}</td>
-            <td>{{ getStatusText(submission.Status) }}</td> 
             <td>{{ submission.Date }}</td>
-            </tr>
+            <td>
+              <v-btn @click="approveSubmission(submission.SubmissionID)" color="green">Approve</v-btn>
+              <v-btn @click="rejectSubmission(submission.SubmissionID)" color="red">Reject</v-btn>
+            </td>
+          </tr>
         </tbody>
       </v-table>
-
-      <div v-else-if="isLoading"> 
-      <v-progress-circular indeterminate color="primary"></v-progress-circular> 
-    </div>
   
-      <div v-else> 
-        <p>No submissions found.</p> 
+      <div v-else>
+        <p>No pending submissions found.</p>
       </div>
-    </v-container>
     </div>
   </template>
   
   <script>
   import axios from 'axios';
-  import config from './config'; 
+  import config from './config';
   
   export default {
     data() {
       return {
-        submissions: [],
-        isLoading: true,  // Add a loading state
-        error: null  // To store any error messages
+        submissions: []
       };
     },
     mounted() {
@@ -52,7 +47,7 @@
       async fetchSubmissions() {
         try {
           const token = localStorage.getItem('access_token');
-          const response = await axios.get(config.backendApiUrl + '/admin/submissions', {
+          const response = await axios.get(config.backendApiUrl + '/auditor/submissions', {
             headers: {
               'Authorization': 'Bearer ' + token
             }
@@ -71,12 +66,48 @@
 			switch (status) {
 				case 0: return 'In Progress';
 				case 1: return 'Pending';
-				case 2: return 'Complete';
-				case 3: return 'Rejected';
-				case 4: return 'Rejected at BaaS';
+        case 2: return 'Approved';
+				case 3: return 'Complete';
+				case 4: return 'Rejected';
 				default: return 'Unknown';
 			}
-		}
+      },
+      async approveSubmission(submissionId) {
+        try {
+          const token = localStorage.getItem('access_token');
+          await axios.post(config.backendApiUrl + '/auditor/submissions', {
+            submission_id: submissionId,
+            status: 'approved'
+          }, {
+            headers: {
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          // Refresh submissions list or provide feedback to the user
+          this.fetchSubmissions();
+        } catch (error) {
+          console.error('Error approving submission:', error);
+          // Handle error, e.g., display an error message
+        }
+      },
+      async rejectSubmission(submissionId) {
+        try {
+          const token = localStorage.getItem('access_token');
+          await axios.post(config.backendApiUrl + '/auditor/submissions', {
+            submission_id: submissionId,
+            status: 'rejected'
+          }, {
+            headers: {
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          // Refresh submissions list or provide feedback to the user
+          this.fetchSubmissions();
+        } catch (error) {
+          console.error('Error rejecting submission:', error);
+          // Handle error, e.g., display an error message
+        }
+      }
     }
   };
   </script>
