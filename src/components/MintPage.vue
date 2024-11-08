@@ -47,7 +47,7 @@
           'Authorization': 'Bearer ' + token
         };
 
-        const response = await axios.post(config.backendApiUrl.concat("/trans_mint/" + this.$route.query.submissionID), {}, { headers: headers });
+        const response = await axios.post(config.backendApiUrl.concat("/mint/" + this.$route.query.submissionID), {}, { headers: headers });
 
         if (response.data.success) {
           this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
