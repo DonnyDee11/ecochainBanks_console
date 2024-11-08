@@ -407,20 +407,14 @@ export default {
         const headers = {'Authorization': 'Bearer ' + token};
         
         const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), data, { headers: headers });
-        if (response.data.success) {
-          if (response.data.message === "Submission pending auditor review.") {
-            // Redirect to PendingReview page
-            this.$router.push({ name: 'PendingReview', query: { submissionID: this.$route.query.submissionID } });
+
+          if (response.data.success) {
+            // Redirect to MintPage with submissionID as a query parameter
+            this.$router.push({ name: 'MintPage', query: { submissionID: this.$route.query.submissionID } }); 
           } else {
-            // Redirect to SuccessPage with submissionID as a query parameter
-            this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
+            alert(`Error: ${response.data.message}`);
           }
-        // if (response.data.success) {
-        //   this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
-        } else {
-          alert(`Error: ${response.data.message}`);
-        }
-      } catch (error) {
+        } catch (error) {
         alert(`Error: ${error.message}`);
       } finally {
         this.loading = false; // Stop the loading spinner regardless of success or error
