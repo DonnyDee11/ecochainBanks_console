@@ -253,41 +253,6 @@ export default {
   },
 
 
-    // updateProsperityMetrics(metrics) {
-    //   this.totalTaxPaid = metrics.find(m => m.Metric === 'Total tax paid').scoringAchieved;
-    //   this.newEmployees = metrics.find(m => m.Metric === 'Absolute number of new employees').scoringAchieved;
-    //   this.employeeTurnover = metrics.find(m => m.Metric === 'Absolute number of employee turnover').scoringAchieved;
-    //   this.economicContributionMetric = metrics.find(m => m.Metric === 'Economic Contribution').scoringAchieved;
-    //   this.totalRnDExpenses = metrics.find(m => m.Metric === 'Total R&D expenses ($)').scoringAchieved;
-    //   this.totalCapExDepreciation = metrics.find(m => m.Metric === 'Total capital expenditures (CapEx) Depreciation').scoringAchieved;
-    //   this.shareBuybacksDividends = metrics.find(m => m.Metric === 'Share buybacks + Dividend payments').scoringAchieved;
-    // },
-
-    // updateGovernanceMetrics(metrics) {
-    //   this.ethicalBehaviorTraining = metrics.find(m => m.Metric === 'Anti-corruption training').scoringAchieved;
-    //   this.previousYearCorruptionIncidents = metrics.find(m => m.Metric === 'Confirmed corruption incidents for previous year').scoringAchieved;
-    //   this.currentYearCorruptionIncidents = metrics.find(m => m.Metric === 'Confirmed corruption incidents in the current year').scoringAchieved;
-
-    // },
-    // updatePlanetMetrics(metrics) {
-    //   this.greenhouseGasEmissions = metrics.find(m => m.Metric === 'Greenhouse Gas (GHG) emissions').scoringAchieved;
-    //   this.tcfdImplementation = metrics.find(m => m.Metric === 'TCFD implementation').scoringAchieved;
-    //   this.waterConsumptionInStressedAreas = metrics.find(m => m.Metric === 'Water consumption and withdrawal in  water-stressed areas').scoringAchieved;
-    //   this.landUseEcologicalSensitivity = metrics.find(m => m.Metric === 'Land use and ecological sensitivity').scoringAchieved;
-    //   console.log("in update method");
-    //   console.log('Greenhouse Gas Emissions:', this.greenhouseGasEmissions);
-    //   console.log('TCFD Implementation:', this.tcfdImplementation);
-    //   console.log('Water Consumption in Stressed Areas:', this.waterConsumptionInStressedAreas);
-    //   console.log('Land Use Ecological Sensitivity:', this.landUseEcologicalSensitivity);
-    // },
-    // handleMetricsUpdate(metrics) {
-    //   this.diversityInclusion = metrics.find(m => m.Metric === 'Diversity and Inclusion').scoringAchieved;
-    //   this.payEquality = metrics.find(m => m.Metric === 'Pay equality').scoringAchieved;
-    //   this.wageLevel = metrics.find(m => m.Metric === 'Wage Level').scoringAchieved;
-    //   this.healthSafetyLevel = metrics.find(m => m.Metric === 'Rate of fatalities').scoringAchieved;
-    // },
-
-
     updateData(data) {
       this.firstName = data.firstName;
       this.lastName = data.lastName;
@@ -384,114 +349,6 @@ export default {
       console.error('Error saving governance metrics:', error.message);
     }
   },
-    // async saveProsperityMetrics() {
-    //   const token = localStorage.getItem('access_token');
-    //   const headers = {
-    //     'Authorization': 'Bearer ' + token
-    //   };
-    //   console.log("in saveProsperityMetrics method");
-    //   console.log('Total Tax Paid:', this.totalTaxPaid);
-    //   console.log('Absolute Number of New Employees:', this.newEmployees);
-    //   console.log('Absolute Number of Employee Turnover:', this.employeeTurnover);
-    //   console.log('Economic Contribution:', this.economicContributionMetric);
-    //   console.log('Total R&D Expenses:', this.totalRnDExpenses);
-    //   console.log('Total Capital Expenditures:', this.totalCapExDepreciation);
-    //   console.log('Share Buybacks + Dividend Payments:', this.shareBuybacksDividends);
-
-    //   try {
-    //     const response = await axios.post(config.backendApiUrl.concat("/input_prosperitymetrics/" + this.$route.query.submissionID), {
-    //       TotalTaxPaid: this.totalTaxPaid,
-    //       AbsNumberOfNewEmps: this.newEmployees,
-    //       AbsNumberOfNewEmpTurnover: this.employeeTurnover,
-    //       EconomicContribution: this.economicContributionMetric,
-    //       TotalRNDExpenses: this.totalRnDExpenses,
-    //       TotalCapitalExpenditures: this.totalCapExDepreciation,
-    //       ShareBuyBacksAndDividendPayments: this.shareBuybacksDividends
-    //     }, { headers: headers });
-
-    //     if (response.data.success) {
-    //       console.log('Prosperity metrics saved successfully:', response.data.message);
-    //     } else {
-    //       console.error('Error saving prosperity metrics:', response.data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error saving prosperity metrics:', error.message);
-    //   }
-    // },
-
-    // async savePlanetMetrics() {
-    //   const token = localStorage.getItem('access_token');
-    //   const headers = {
-    //     'Authorization': 'Bearer ' + token
-    //   };
-    //   console.log("in savePlanetMetrics method");
-    //   console.log('Greenhouse Gas Emissions:', this.greenhouseGasEmissions);
-    //   console.log('Water Consumption in Stressed Areas:', this.waterConsumptionInStressedAreas);
-    //   console.log('Land Use Ecological Sensitivity:', this.landUseEcologicalSensitivity);
-    //   try {
-    //     const response = await axios.post(config.backendApiUrl.concat("/input_planetmetrics/" + this.$route.query.submissionID), {
-    //       GreenhouseGasEmission: this.greenhouseGasEmissions,
-    //       WaterConsumption: this.waterConsumptionInStressedAreas,
-    //       LandUse: this.landUseEcologicalSensitivity
-    //     }, { headers: headers });
-
-    //     if (response.data.success) {
-    //       console.log('Planet metrics saved successfully:', response.data.message);
-    //     } else {
-    //       console.error('Error saving planet metrics:', response.data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error saving planet metrics:', error.message);
-    //   }
-    // },
-
-    // async saveGovernanceMetrics() {
-    //   const token = localStorage.getItem('access_token');
-    //   const headers = {
-    //     'Authorization': 'Bearer ' + token
-    //   };
-    //   console.log("in here")
-    //   try {
-    //     const response = await axios.post(config.backendApiUrl.concat("/input_governancemetrics/" + this.$route.query.submissionID), {
-    //       AntiCorruptionTraining: this.ethicalBehaviorTraining,
-    //       ConfirmedCorruptionIncidentPrev: this.previousYearCorruptionIncidents,
-    //       ConfirmedCorruptionIncidentCurrent: this.currentYearCorruptionIncidents
-    //     }, { headers: headers });
-
-    //     if (response.data.success) {
-    //       console.log('Governance metrics saved successfully:', response.data.message);
-    //     } else {
-    //       console.error('Error saving governance metrics:', response.data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error saving governance metrics:', error.message);
-    //   }
-    // },
-    // async savePeopleMetrics() {
-    //   const token = localStorage.getItem('access_token');
-    //   const headers = {
-    //     'Authorization': 'Bearer ' + token
-    //   };
-
-    //   try {
-
-    //     const response = await axios.post(config.backendApiUrl.concat("/input_peoplemetrics/" + this.$route.query.submissionID), {
-    //       DiversityAndInclusion: this.diversityInclusion,
-    //       PayEquality: this.payEquality,
-    //       WageLevel: this.wageLevel,
-    //       HealthAndSafetyLevel: this.healthSafetyLevel
-    //     }, { headers: headers });
-
-    //     if (response.data.success) {
-    //       console.log('Metrics saved successfully:', response.data.message);
-    //     } else {
-    //       console.error('Error saving metrics:', response.data.message);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error saving metrics:', error.message);
-    //   }
-    // },
-
     async saveReportInfo() {
       const token = localStorage.getItem('access_token');
       const headers = {
@@ -524,53 +381,51 @@ export default {
         console.error('Error saving report info:', error.message);
       }
     },
+    
+    async onComplete() {
+      console.log("in submitting");
+      
+      // Check the checkbox before proceeding
+      if (!this.canSubmit) {
+        if (!this.checkbox) {
+          this.dialogVisible = true;
+          return;
+        }
+      }
 
-   async onComplete() {
-  console.log("in submitting");
-  
-  // Check the checkbox before proceeding
-  if (!this.canSubmit) {
-    // if (!this.checkbox) {
-    //   return alert('Please tick the checkbox before proceeding.');
-    // }
-    if (!this.checkbox) {
-      this.dialogVisible = true;
-      return;
-    }
-  }
+      this.loading = true; // Start the loading spinner
 
-  this.loading = true; // Start the loading spinner
+      try {
+        // Gather all metrics data
+        const data = {
+          social: this.socialMetrics,
+          environmental: this.environmentalMetrics,
+          governance: this.governanceMetrics
+        };
 
-  try {
-    // Gather all metrics data
-    const data = {
-      social: this.socialMetrics,
-      environmental: this.environmentalMetrics,
-      governance: this.governanceMetrics
-    };
-
-  const token = localStorage.getItem('access_token');
-  const headers = {
-    'Authorization': 'Bearer ' + token
-  };
-
-  
-    // const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), {}, { headers: headers });
-    const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), 
-      data, { headers: headers }
-    );
-
-    if (response.data.success) {
-      this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
-    } else {
-      alert(`Error: ${response.data.message}`);
-    }
-  } catch (error) {
-    alert(`Error: ${error.message}`);
-  } finally {
-    this.loading = false; // Stop the loading spinner regardless of success or error
-  }
-},
+        const token = localStorage.getItem('access_token');
+        const headers = {'Authorization': 'Bearer ' + token};
+        
+        const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), data, { headers: headers });
+        if (response.data.success) {
+          if (response.data.message === "Submission pending auditor review.") {
+            // Redirect to PendingReview page
+            this.$router.push({ name: 'PendingReview', query: { submissionID: this.$route.query.submissionID } });
+          } else {
+            // Redirect to SuccessPage with submissionID as a query parameter
+            this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
+          }
+        // if (response.data.success) {
+        //   this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
+        } else {
+          alert(`Error: ${response.data.message}`);
+        }
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      } finally {
+        this.loading = false; // Stop the loading spinner regardless of success or error
+        }
+      },
 
 
     beforeChange(activeTabIndex, nextTabIndex) {

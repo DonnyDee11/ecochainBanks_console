@@ -4,6 +4,7 @@ import LandingPage from '../components/LandingPage.vue';
 import CreateNewReport from '../components/CreateNewReport.vue'; 
 import SignUp from '../components/SignUpForm.vue'; 
 import SuccessPage from  '../components/SuccessPage.vue'; 
+import MintPage from  '../components/MintPage.vue'; 
 import OrganisationForm from '../components/OrganisationForm.vue';
 import AdminSubmissions from '../components/AdminSubmissions.vue';
 import AuditorSubmissions from '../components/AuditorSubmissions.vue';
@@ -48,6 +49,11 @@ const routes = [
     path: '/SuccessPage',
     name: 'SuccessPage',
     component: SuccessPage
+  },
+  {
+    path: '/MintPage',
+    name: 'MintPage',
+    component: MintPage
   },
 
 ];
