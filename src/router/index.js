@@ -17,6 +17,8 @@ import MintPage from  '../components/MintPage.vue';
 import OrganisationForm from '../components/OrganisationForm.vue';
 import AdminSubmissions from '../components/AdminSubmissions.vue'
 import AuditorSubmissions from '../components/AuditorSubmissions.vue'
+import SubmissionDetails from '../components/SubmissionDetails.vue';  // Import the SubmissionDetails component
+import ReviewPending from '../components/ReviewPending.vue';
 
 const routes = [
   {
@@ -63,6 +65,16 @@ const routes = [
     path: '/AuditorSubmissions',
     name: 'AuditorSubmissions',
     component: AuditorSubmissions
+  },
+  { 
+    path: '/SubmissionDetails', 
+    name: 'SubmissionDetails',  // Give it a name
+    component: SubmissionDetails 
+  },
+  { 
+    path: '/ReviewPending', 
+    name: 'ReviewPending', 
+    component: ReviewPending 
   },
 
 ];

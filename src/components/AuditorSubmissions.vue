@@ -8,6 +8,7 @@
             <th>Submission ID</th>
             <th>User ID</th>
             <th>Date</th>
+            <th>Outliers</th>
             <th>Actions</th> 
           </tr>
         </thead>
@@ -17,6 +18,17 @@
             <td>{{ submission.UserID }}</td>
             <td>{{ submission.Date }}</td>
             <td>
+            <v-tooltip bottom> 
+              <template v-slot:activator="{ on, attrs }">
+                <span v-bind="attrs" v-on="on">
+                  {{ submission.Outliers ? (submission.Outliers.length > 20 ? submission.Outliers.slice(0, 20) + '...' : submission.Outliers) : 'None' }} 
+                </span>
+              </template>
+              <span>{{ submission.Outliers || 'None' }}</span> 
+            </v-tooltip>
+            </td>
+            <td>
+              <v-btn @click="viewSubmission(submission.SubmissionID)" color="primary">View</v-btn>
               <v-btn @click="approveSubmission(submission.SubmissionID)" color="green">Approve</v-btn>
               <v-btn @click="rejectSubmission(submission.SubmissionID)" color="red">Reject</v-btn>
             </td>

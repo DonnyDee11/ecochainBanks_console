@@ -52,6 +52,9 @@ export default {
 
         // Greenhouse gas emissions
         { category: 'Greenhouse gas emissions', name: 'Carbon Emissions', metric: 'CarbonEmissions', scoringAchieved: '' },
+        { category: 'Emissions', name: 'Scope 1', metric: 'Scope1', scoringAchieved: '' },
+        { category: '', name: 'Scope 2', metric: 'Scope2', scoringAchieved: '' },  
+        { category: '', name: 'Scope 3', metric: 'Scope3', scoringAchieved: '' },  
         { category: '', name: 'Car Emissions', metric: 'CarEmissions', scoringAchieved: '' },
         { category: '', name: 'Refrigerant Gas Emissions', metric: 'RefrigerantGasEmissions', scoringAchieved: '' },
         { category: '', name: 'Diesel Generators Emissions', metric: 'DieselGeneratorsEmissions', scoringAchieved: '' },
@@ -73,6 +76,7 @@ export default {
         { category: 'Waste Management', name: 'Total Waste', metric: 'TotalWaste', scoringAchieved: '' },
         { category: '', name: 'Recycled Waste', metric: 'RecycledWaste', scoringAchieved: '' },
         { category: '', name: 'Waste to Landfill', metric: 'WasteToLandfill', scoringAchieved: '' },
+        { category: 'Water Management', name: 'Total Water Consumption', metric: 'TotalWaterConsumption', scoringAchieved: '' },
       ],
     }
   },

@@ -291,22 +291,26 @@ export default {
   },
 
   async saveEnvironmentalMetrics() {
+
     const token = localStorage.getItem('access_token');
     const headers = {
       'Authorization': 'Bearer ' + token
     };
 
+    
     try {
-      // No need to check for isApplicable anymore
-      const extractedEnvironmentalMetrics = this.environmentalMetrics.reduce((acc, metric) => {
-        if (metric.scoringAchieved.trim() !== '') {
-          acc[metric.metric] = metric.scoringAchieved; 
-        }
-        return acc;
-      }, {});
+    const extractedEnvironmentalMetrics = this.environmentalMetrics.reduce((acc, metric) => {
+      if (metric.scoringAchieved.trim() !== '') {
+        acc[metric.metric] = metric.scoringAchieved;
+      }
+      return acc;
+    }, {});
 
-      const response = await axios.post(config.backendApiUrl.concat("/input_environmental_metrics/" + this.$route.query.submissionID), 
-        extractedEnvironmentalMetrics, 
+    console.log("Environmental metrics being sent:", extractedEnvironmentalMetrics);
+
+      // Send extractedEnvironmentalMetrics directly (without nesting)
+      const response = await axios.post(config.backendApiUrl.concat("/input_environmental_metrics/" + this.$route.query.submissionID),
+        extractedEnvironmentalMetrics,  // Send directly
         { headers: headers }
       );
 
@@ -407,11 +411,15 @@ export default {
         const headers = {'Authorization': 'Bearer ' + token};
         
         const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), data, { headers: headers });
-
-          if (response.data.success) {
+        
+        if (response.data.success) {
             // Redirect to MintPage with submissionID as a query parameter
-            this.$router.push({ name: 'MintPage', query: { submissionID: this.$route.query.submissionID } }); 
+            this.$router.push({ name: 'MintPage', query: { submissionID: this.$route.query.submissionID } });
+          } else if (response.data.message === "Submission flagged for review due to outliers. Please wait for auditor approval.") {
+            // Redirect to the ReviewPending page
+            this.$router.push({ name: 'ReviewPending', query: { submissionID: this.$route.query.submissionID } });
           } else {
+            // Handle other errors
             alert(`Error: ${response.data.message}`);
           }
         } catch (error) {
@@ -463,7 +471,13 @@ export default {
       if (response.data.success) {
         this.$router.push({ name: 'SuccessPage', query: { submissionID: this.$route.query.submissionID } });
       } else {
-        alert(`Error: ${response.data.message}`);
+        // Handle the case where outliers are detected
+         if (response.data.message.includes('Submission flagged for review')) {
+        // Redirect to the ReviewPending page
+          this.$router.push({ name: 'ReviewPending', query: { submissionID: this.$route.query.submissionID } });
+        } else {
+          alert(`Error: ${response.data.message}`);
+        }
       }
     } catch (error) {
       alert(`Error: ${error.message}`);
