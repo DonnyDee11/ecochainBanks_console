@@ -155,10 +155,11 @@ export default {
 		getStatusText(status) {
 			switch (status) {
 				case 0: return 'In Progress';
-				case 1: return 'Pending';
-				case 2: return 'Complete';
-				case 3: return 'Rejected';
-				case 4: return 'Rejected at BaaS';
+				case 1: return 'Pending Auditor Review';
+				case 2: return 'Ready for BaaS';
+				case 3: return 'Ready for Minting';
+				case 4: return 'Completed';
+				case 5: return 'Rejected';
 				default: return 'Unknown';
 			}
 		}

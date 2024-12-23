@@ -49,7 +49,7 @@
 
 						<v-col cols="12"> 
 							<label>Role</label> 
-							<v-radio-group v-model="selectedRole" row> 
+							<v-radio-group v-model="role" row> 
 								<v-radio label="User" value="user"></v-radio> 
 								<v-radio label="Auditor" value="auditor"></v-radio> 
 							</v-radio-group>
@@ -110,7 +110,7 @@ export default {
 				value => value.length >= 6 || 'Minimum 6 characters',
 			],
 			isLoading:false,
-			selectedRole: 'user',  // Default role to 'user'
+			role: 'user',  // Default role to 'user'
 		};
 	},
 	components: {
@@ -136,7 +136,7 @@ export default {
                 email: this.email,
                 password: this.password,
                 name: this.Organisation_name,
-				role: this.selectedRole  // Include the selected role in the payload
+				role: this.role  // Include the selected role in the payload
             });
 
             console.log('Response from backend:', response.data);
@@ -144,7 +144,8 @@ export default {
             if (response.data.success) {
                 localStorage.setItem('access_token', response.data.access_token);
                 console.log("Attempting redirect...")
-                this.$router.push('/organisation_form');
+				this.$router.push({ name: 'OrganisationForm', query: { role: this.role } });
+                // this.$router.push('/organisation_form');
             } else {
                 console.error('Register failed:', response.data.message);
                 this.errors.push(response.data.message || "An error occurred during registration.");

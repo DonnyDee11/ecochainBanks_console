@@ -10,6 +10,8 @@ import AdminSubmissions from '../components/AdminSubmissions.vue';
 import AuditorSubmissions from '../components/AuditorSubmissions.vue';
 import SubmissionDetails from '../components/SubmissionDetails.vue';  // Import the SubmissionDetails component
 import ReviewPending from '../components/ReviewPending.vue';
+import SendToBaaSPage from '../components/SendToBaaSPage.vue';
+
 
 const routes = [
   {
@@ -66,6 +68,10 @@ const routes = [
     path: '/ReviewPending', 
     name: 'ReviewPending', 
     component: ReviewPending 
+  },
+  { path: '/SendToBaaSPage', 
+    name: 'SendToBaaSPage', 
+    component: SendToBaaSPage 
   },
   
 ];

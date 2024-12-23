@@ -113,11 +113,17 @@ export default {
 						console.log("Attempting redirect...")
 						// this.$router.push('/dashboard');
 						// Check the user's role from localStorage and redirect accordingly
-						const userRole = localStorage.getItem('role'); // Assuming you store the role in localStorage during login
+						// const userRole = localStorage.getItem('role'); // Assuming you store the role in localStorage during login
+						// if (userRole === 'auditor') {
+						// 	this.$router.push('/AuditorSubmissions'); 
+						// } else {
+						// 	this.$router.push('/dashboard'); 
+						// }
+						const userRole = this.$route.query.role; 
 						if (userRole === 'auditor') {
-							this.$router.push('/AuditorSubmissions'); 
+						this.$router.push('/AuditorSubmissions');
 						} else {
-							this.$router.push('/dashboard'); 
+						this.$router.push('/dashboard');
 						}
 					} else {
 						console.error('Register failed:', response.data.message);
@@ -135,13 +141,6 @@ export default {
 </script>
 
 
-
-
-
-  
-
-
-  
 <style scoped>
 .auth-container {
 	display: grid;
