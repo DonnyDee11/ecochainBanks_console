@@ -74,12 +74,17 @@
         this.isLoading = false;  // Set loading state to false after the request is complete
       }
       },
+      viewSubmission(submissionId) {
+  // Pass the submissionId as a route param
+  this.$router.push({ name: 'SubmissionDetails', params: { submissionId: submissionId } }); 
+},
       getStatusText(status) {
 			switch (status) {
 				case 0: return 'In Progress';
 				case 1: return 'Pending';
-        case 2: return 'Approved';
-				case 3: return 'Complete';
+        case 2: return 'Approved for Baas';
+				case 3: return 'Approved for Minting';
+				case 4: return 'Complete';
 				case 4: return 'Rejected';
 				default: return 'Unknown';
 			}
