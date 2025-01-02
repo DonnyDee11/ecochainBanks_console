@@ -65,9 +65,17 @@
 						<td>{{ new Date(submission.Date).toLocaleDateString() }}</td>
 						<td>{{ getStatusText(submission.Status) }}</td>
 						<td>
-							<v-btn v-if="submission.Status === 0" color="green"
-								@click="goToCreateNewReport(submission.SubmissionID)">
+							<v-btn v-if="submission.Status === 0" color="green" @click="goToCreateNewReport(submission.SubmissionID)">
 								Continue
+							</v-btn>
+							<v-btn v-else-if="submission.Status === 1" color="orange" @click="goToReviewPending(submission.SubmissionID)">
+								Pending Review
+							</v-btn>
+							<v-btn v-else-if="submission.Status === 2" color="blue" @click="goToSendToBaaSPage(submission.SubmissionID)">
+								Send to BaaS
+							</v-btn>
+							<v-btn v-else-if="submission.Status === 3" color="purple" @click="goToMintPage(submission.SubmissionID)">
+								Mint NFT
 							</v-btn>
 							<v-btn v-else color="blue" @click="goToSuccessPage(submission.SubmissionID)">
 								View Details
@@ -108,6 +116,20 @@ export default {
 		goToCreateNewReport(submissionID) {
 			console.log(submissionID)
 			this.$router.push({ name: 'CreateNewReport', query: { submissionID } });
+		},
+		goToReviewPending(submissionID) {
+			console.log(submissionID);
+			this.$router.push({ name: 'ReviewPending', query: { submissionID } });
+		},
+
+		goToSendToBaaSPage(submissionID) {
+			console.log(submissionID);
+			this.$router.push({ name: 'SendToBaaSPage', query: { submissionID } });
+		},
+
+		goToMintPage(submissionID) {
+			console.log(submissionID);
+			this.$router.push({ name: 'MintPage', query: { submissionID } });
 		},
 		goToSuccessPage(submissionID) {
 			console.log(submissionID)

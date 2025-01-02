@@ -409,20 +409,7 @@ export default {
 
         const token = localStorage.getItem('access_token');
         const headers = {'Authorization': 'Bearer ' + token};
-        
-        // const response = await axios.post(config.backendApiUrl.concat("/trans/" + this.$route.query.submissionID), data, { headers: headers });
-        
-        // if (response.data.success) {
-        //     // Redirect to MintPage with submissionID as a query parameter
-        //     this.$router.push({ name: 'MintPage', query: { submissionID: this.$route.query.submissionID } });
-        //   } else if (response.data.message === "Submission flagged for review due to outliers. Please wait for auditor approval.") {
-        //     // Redirect to the ReviewPending page
-        //     this.$router.push({ name: 'ReviewPending', query: { submissionID: this.$route.query.submissionID } });
-        //   } else {
-        //     // Handle other errors
-        //     alert(`Error: ${response.data.message}`);
-        //   }
-        
+              
           const response = await axios.post(config.backendApiUrl.concat("/detect_outliers/" + this.$route.query.submissionID),
           data, { headers: headers });
 
@@ -433,12 +420,12 @@ export default {
               // Outliers detected, redirect to ReviewPending
               this.$router.push({ name: 'ReviewPending', query: { submissionID: this.$route.query.submissionID } });
             }
-        } catch (error) {
-        alert(`Error: ${error.message}`);
-      } finally {
-        this.loading = false; // Stop the loading spinner regardless of success or error
-        }
-      },
+              } catch (error) {
+              alert(`Error: ${error.message}`);
+            } finally {
+              this.loading = false; // Stop the loading spinner regardless of success or error
+              }
+            },
 
 
     beforeChange(activeTabIndex, nextTabIndex) {

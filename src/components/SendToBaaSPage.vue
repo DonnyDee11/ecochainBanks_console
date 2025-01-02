@@ -2,7 +2,7 @@
     <v-container class="auth-container">
       <v-row>
         <v-col>
-          <v-img></v-img>
+          <v-img src="@/assets/successphoto.png" alt="Success Photo" class="success-photo"></v-img>
         </v-col>
   
         <v-col>
@@ -11,10 +11,14 @@
           <p style="margin-bottom: 20px;">
             Your submission has passed the outlier check. You can now proceed to send your data to the BaaS platform.
           </p>
-  
-          <v-btn block color="#219653" class="text-none" @click="sendToBaaS">
-            Send to BaaS
-          </v-btn>
+
+          <v-row self-align="right" justify="center">
+            <v-col cols="6">
+              <v-btn block color="#219653" class="text-none" @click="sendToBaaS">
+                Send to BaaS
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>

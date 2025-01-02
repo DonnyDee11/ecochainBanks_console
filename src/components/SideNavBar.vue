@@ -7,7 +7,7 @@
 			</div>
 			<div class="nav-items" style="">
 				<ul>
-					<li v-for="item in menuItems" :key="item.label">
+					<li v-for="item in filteredMenuItems" :key="item.label">
 						<a :href="item.link" @click.prevent="handleMenuClick(item)">
 							<i :class="item.icon"></i>
 							{{ item.label }}
@@ -35,6 +35,19 @@ export default {
 			]
 		};
 	},
+	computed: {
+		filteredMenuItems() {
+		const role = localStorage.getItem('role'); // Get the user's role
+		if (role === 'auditor') {
+			return [
+			{ label: 'Dashboard', link: '/AuditorSubmissions', icon: 'ti-layout-grid2' }, // Redirect to AuditorSubmissions
+			{ label: 'Log Out', link: '/', action: this.logout, icon: 'ti-back-left' }
+			];
+		} else {
+			return this.menuItems;
+		}
+		}
+	},
 	methods: {
 		logout() {
 			localStorage.removeItem('access_token');
@@ -59,7 +72,19 @@ export default {
 				this.$router.push(menuItem.link);
 			}
 		}
-	}
+	},
+	async mounted() {
+		try {
+		const token = localStorage.getItem('access_token');
+		const headers = { Authorization: `Bearer ${token}` };
+		const response = await axios.get(config.backendApiUrl + '/get_role', { headers });
+		// Store the role in localStorage or Vuex
+		localStorage.setItem('role', response.data.role);  
+		} catch (error) {
+		console.error('Error fetching role:', error);
+		// Handle the error, e.g., redirect to login page
+		}
+	},
 };
 </script>
   

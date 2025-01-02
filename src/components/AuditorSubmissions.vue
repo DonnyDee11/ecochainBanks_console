@@ -1,12 +1,42 @@
 <template>
     <div>
       <h1>Auditor - Pending Submissions</h1>
-  
+      <v-container>
+
+      <v-table>
+        <thead>
+          <tr>
+            <td colspan="4">
+              <h1>{{ name }}</h1>
+            </td>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><b>Location</b></td>
+            <td>{{ location }}</td>
+            <td><b>Industry</b></td>
+            <td>{{ industry }}</td>
+          </tr>
+          <tr>
+            <td><b>Size</b></td>
+            <td>{{ size }}</td>
+
+            <td><b>Description</b></td>
+            <td>{{ description }}</td>
+          </tr>
+        </tbody>
+      </v-table>
+
+      </v-container>
+      <v-container>
       <v-table v-if="submissions.length > 0">
         <thead>
           <tr>
             <th>Submission ID</th>
-            <th>User ID</th>
+            <th>User Name</th>
             <th>Date</th>
             <th>Outliers</th>
             <th>Actions</th> 
@@ -15,17 +45,29 @@
         <tbody>
           <tr v-for="submission in submissions" :key="submission.SubmissionID">
             <td>{{ submission.SubmissionID }}</td>
-            <td>{{ submission.UserID }}</td>
+            <td>{{ submission.UserName }}</td>
             <td>{{ submission.Date }}</td>
             <td>
-            <v-tooltip bottom> 
-              <template v-slot:activator="{ on, attrs }">
-                <span v-bind="attrs" v-on="on">
-                  {{ submission.Outliers ? (submission.Outliers.length > 20 ? submission.Outliers.slice(0, 20) + '...' : submission.Outliers) : 'None' }} 
-                </span>
-              </template>
-              <span>{{ submission.Outliers || 'None' }}</span> 
-            </v-tooltip>
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on">
+                    <v-table> 
+                      <thead>
+                        <tr>
+                          <th>Metric</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="outlier in submission.Outliers.split(', ')" :key="outlier">
+                          <td>{{ outlier.split(': ')[0].replace('EnvironmentalMetrics: ', '') }}</td> 
+                          <td>{{ outlier.split(': ')[1] }}</td> 
+                        </tr>
+                      </tbody>
+                    </v-table>
+                  </span>
+                </template>
+              </v-menu>
             </td>
             <td>
               <v-btn @click="viewSubmission(submission.SubmissionID)" color="primary">View</v-btn>
@@ -35,11 +77,14 @@
           </tr>
         </tbody>
       </v-table>
+    </v-container>
+    
   
-      <div v-else>
+      <!-- <div v-else>
         <p>No pending submissions found.</p>
-      </div>
+      </div> -->
     </div>
+  
   </template>
   
   <script>
@@ -49,35 +94,79 @@
   export default {
     data() {
       return {
+        name: '',
+			email: '',
+			algo_add: '',
+			location: '',
+			industry: '',
+			size: '',
+			description: '',
         submissions: []
       };
     },
     mounted() {
-      this.fetchSubmissions();
+      // this.fetchSubmissions();
+      this.fetchDashboardData();
     },
     methods: {
-      async fetchSubmissions() {
-        try {
-          const token = localStorage.getItem('access_token');
-          const response = await axios.get(config.backendApiUrl + '/auditor/submissions', {
-            headers: {
-              'Authorization': 'Bearer ' + token
-            }
-          });
-  
-          this.submissions = response.data; 
-        } catch (error) {
-          console.error('Error fetching submissions:', error);
-          this.error = "Failed to fetch submissions. Please try again later."; // Set error message
-        // You could add more specific error handling based on error.response.status
-      } finally {
-        this.isLoading = false;  // Set loading state to false after the request is complete
-      }
-      },
-      viewSubmission(submissionId) {
-  // Pass the submissionId as a route param
-  this.$router.push({ name: 'SubmissionDetails', params: { submissionId: submissionId } }); 
-},
+      formatOutliers(outliersString) { 
+    if (outliersString) {
+      return outliersString.split(', ').map(outlier => {
+        const [metricType, metric] = outlier.split(': ');
+        return `${metric}: ${this.submission[metricType][metric]}`; 
+      });
+    } else {
+      return [];
+     }
+  },
+
+      async fetchDashboardData() {
+			try {
+				const token = localStorage.getItem('access_token');
+				const headers = {
+					'Authorization': 'Bearer ' + token
+				};
+
+				const response = await axios.get(config.backendApiUrl.concat("/auditor/submissions"), { headers: headers });
+
+				if (response.data.success) {
+					this.name = response.data.name;
+					this.email = response.data.email;
+					this.algo_add = response.data.algo_add;
+					this.submissions = response.data.submissions;
+					this.location = response.data.location;
+					this.industry = response.data.industry;
+					this.size = response.data.size;
+					this.description = response.data.description;
+				} else {
+					console.error('Error fetching dashboard data');
+				}
+			} catch (error) {
+				console.error('There was an error fetching the data', error);
+			}
+		},
+      // async fetchSubmissions() {
+      //     try {
+      //       const token = localStorage.getItem('access_token');
+      //       const response = await axios.get(config.backendApiUrl + '/auditor/submissions', {
+      //         headers: {
+      //           'Authorization': 'Bearer ' + token
+      //         }
+      //       });
+    
+      //       this.submissions = response.data; 
+      //     } catch (error) {
+      //       console.error('Error fetching submissions:', error);
+      //       this.error = "Failed to fetch submissions. Please try again later."; // Set error message
+      //     // You could add more specific error handling based on error.response.status
+      //   } finally {
+      //     this.isLoading = false;  // Set loading state to false after the request is complete
+      //   }
+      //   },
+        viewSubmission(submissionId) {
+    // Pass the submissionId as a route param
+    this.$router.push({ name: 'SubmissionDetails', params: { submissionId: submissionId } }); 
+  },
       getStatusText(status) {
 			switch (status) {
 				case 0: return 'In Progress';

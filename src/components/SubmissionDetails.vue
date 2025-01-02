@@ -2,7 +2,12 @@
   <div v-if="submission">
     <h2>Submission Details (ID: {{ submission.submission.SubmissionID }})</h2>
     <p>Bank Name: {{ submission.submission.Name }}</p>
-    <p>Outliers: {{ submission.submission.Outliers }}</p>
+
+    <h3>Outliers</h3>
+    <ul v-if="submission.submission.Outliers">
+      <li v-for="(outlier, index) in outliers" :key="index">{{ outlier }}</li>
+    </ul>
+    <p v-else>No outliers found.</p>
 
     <v-form @submit.prevent="submitFeedback">
       <v-textarea v-model="feedback" label="Auditor Feedback" outlined rows="3"></v-textarea>
