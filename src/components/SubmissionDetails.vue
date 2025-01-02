@@ -1,18 +1,34 @@
 <template>
   <div v-if="submission">
-    <h2>Submission Details (ID: {{ submission.submission.SubmissionID }})</h2>
-    <p>Bank Name: {{ submission.submission.Name }}</p>
+    <h2>Submission Details (ID: {{ submission.SubmissionID }})</h2> 
+    <p>Bank Name: {{ submission.Name }}</p>  
+    <p>Outliers: {{ submission.Outliers }}</p>
 
-    <h3>Outliers</h3>
-    <ul v-if="submission.submission.Outliers">
-      <li v-for="(outlier, index) in outliers" :key="index">{{ outlier }}</li>
-    </ul>
-    <p v-else>No outliers found.</p>
+    <v-btn @click="$router.push('/AuditorSubmissions')" color="primary">Back</v-btn>
 
-    <v-form @submit.prevent="submitFeedback">
+    <!-- <v-form @submit.prevent="submitFeedback">
       <v-textarea v-model="feedback" label="Auditor Feedback" outlined rows="3"></v-textarea>
       <v-btn type="submit" color="primary">Submit Feedback</v-btn>
-    </v-form>
+    </v-form> -->
+<!-- 
+    <v-table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+          <th>Difference from Mean</th>
+          <th>Thresholds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(outlier, index) in (submission.Outliers ? submission.Outliers.split(', ') : [])" :key="index">
+          <td>{{ outlier.split(': ')[0] }}</td>
+          <td>{{ outlier.split(': ')[1].split(' (')[0] }}</td>
+          <td>{{ outlier.split('(Difference: ')[1].split(',')[0] }}</td>
+          <td>{{ outlier.split('Thresholds: ')[1].split(')')[0] }}</td>
+        </tr>
+      </tbody>
+    </v-table> -->
   </div>
 </template>
   
@@ -32,29 +48,28 @@
     mounted() {
       this.fetchSubmissionDetails();
     },
-    computed: {
-    outliers() {
-      if (this.submission && this.submission.submission.Outliers) {
-        return this.submission.submission.Outliers.split(', ');  
-      } else {
-        return [];
-      }}},
     methods: {
       async fetchSubmissionDetails() {
         try {
-          const submissionId = this.$route.params.submissionId;
+          // Get the submissionId from the query parameters
+          const submissionId = this.$route.params.submissionId;  
           const token = localStorage.getItem('access_token');
-          const response = await axios.get(config.backendApiUrl + `/auditor/submissions/${submissionId}`, {
-  headers: { Authorization: `Bearer ${token}` }
-});
-          this.submission = response.data;
+          const response = await axios.get(config.backendApiUrl + `/auditor_review/${submissionId}`, {  // Use the correct route name
+            headers: { Authorization: `Bearer ${token}` }
+          });
+
+          if (response.data && response.data.submission) {
+            this.submission = response.data.submission;    // Assign the entire response.data to this.submission
+          } else {
+            console.error("Submission data not found in the response:", response.data);
+          }
         } catch (error) {
           console.error('Error fetching submission details:', error);
         }
       },
       async submitFeedback() {
       try {
-        const submissionId = this.$route.params.submission_id;
+        const submissionId = this.$route.query.submissionID;
         const token = localStorage.getItem('access_token');
         await axios.post(`/auditor/submissions/${submissionId}/feedback`, {  // New route for feedback
           feedback: this.feedback

@@ -50,7 +50,7 @@
             <td>
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <span v-bind="attrs" v-on="on">
+                  <span v-bind="attrs">
                     <v-table> 
                       <thead>
                         <tr>
@@ -61,7 +61,7 @@
                       <tbody>
                         <tr v-for="outlier in submission.Outliers.split(', ')" :key="outlier">
                           <td>{{ outlier.split(': ')[0].replace('EnvironmentalMetrics: ', '') }}</td> 
-                          <td>{{ outlier.split(': ')[1] }}</td> 
+                          <td>{{ outlier.split(': ')[1].split(' (')[0] }}</td> 
                         </tr>
                       </tbody>
                     </v-table>
@@ -78,12 +78,19 @@
         </tbody>
       </v-table>
     </v-container>
-    
+    <!-- Loading Spinner and Text -->
+    <div v-if="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Submitting your report and generating an ecochain NFT</p>
+    </div>
   
       <!-- <div v-else>
         <p>No pending submissions found.</p>
       </div> -->
     </div>
+
+      
+
   
   </template>
   
@@ -101,12 +108,13 @@
 			industry: '',
 			size: '',
 			description: '',
-        submissions: []
+      submissions: [],
+      loading: false
       };
     },
     mounted() {
       // this.fetchSubmissions();
-      this.fetchDashboardData();
+      this.fetchSubmissions();
     },
     methods: {
       formatOutliers(outliersString) { 
@@ -120,7 +128,7 @@
      }
   },
 
-      async fetchDashboardData() {
+      async fetchSubmissions() {
 			try {
 				const token = localStorage.getItem('access_token');
 				const headers = {
@@ -163,10 +171,10 @@
       //     this.isLoading = false;  // Set loading state to false after the request is complete
       //   }
       //   },
-        viewSubmission(submissionId) {
-    // Pass the submissionId as a route param
-    this.$router.push({ name: 'SubmissionDetails', params: { submissionId: submissionId } }); 
-  },
+      viewSubmission(submissionId) {
+        // Pass the submissionId as a query parameter
+        this.$router.push(`/SubmissionDetails/${submissionId}`); 
+      },
       getStatusText(status) {
 			switch (status) {
 				case 0: return 'In Progress';
@@ -183,7 +191,7 @@
           const token = localStorage.getItem('access_token');
           await axios.post(config.backendApiUrl + '/auditor/submissions', {
             submission_id: submissionId,
-            status: 'approved'
+            action: 'approved'
           }, {
             headers: {
               'Authorization': 'Bearer ' + token
@@ -201,7 +209,7 @@
           const token = localStorage.getItem('access_token');
           await axios.post(config.backendApiUrl + '/auditor/submissions', {
             submission_id: submissionId,
-            status: 'rejected'
+            action: 'rejected'
           }, {
             headers: {
               'Authorization': 'Bearer ' + token
@@ -254,13 +262,6 @@
   padding: 10px;
 }
 
-/* Loading Container */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
 
 /* No Submissions Message */
 .no-submissions {
@@ -269,4 +270,29 @@
   font-style: italic;
   color: #666; /* Lighter gray */
 }
+
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* or 'absolute' depending on your layout needs */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+  z-index: 1000; /* to ensure it's above other content */
+}
+
+.spinner {
+  border: 6px solid #f3f3f3; /* Light grey */
+  border-top: 6px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-right: 20px; /* Space between spinner and text */
+}
+
 </style>

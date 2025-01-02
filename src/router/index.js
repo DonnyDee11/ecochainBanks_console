@@ -69,7 +69,7 @@ const routes = [
     component: AuditorSubmissions
   },
   { 
-    path: '/SubmissionDetails', 
+    path: '/SubmissionDetails/:submissionId', 
     name: 'SubmissionDetails',  // Give it a name
     component: SubmissionDetails 
   },

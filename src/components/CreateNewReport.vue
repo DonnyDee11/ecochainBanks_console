@@ -95,10 +95,10 @@
     </FormWizard>
   </div>
   <!-- Loading Spinner and Text -->
-<div v-if="loading" class="loading-container">
-  <div class="spinner"></div>
-  <p>Submitting your report and generating an ecochain NFT</p>
-</div>
+    <div v-if="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Submitting your report and Checking for Outliers</p>
+    </div>
 
 
   <v-dialog v-model="dialogVisible" max-width="700px">

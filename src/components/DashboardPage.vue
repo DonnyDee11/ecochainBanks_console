@@ -77,7 +77,8 @@
 							<v-btn v-else-if="submission.Status === 3" color="purple" @click="goToMintPage(submission.SubmissionID)">
 								Mint NFT
 							</v-btn>
-							<v-btn v-else color="blue" @click="goToSuccessPage(submission.SubmissionID)">
+							<span v-else-if="submission.Status === 5" style="color: red; font-weight: bold;">REJECTED</span>
+							<v-btn v-else color="gray" @click="goToSuccessPage(submission.SubmissionID)">
 								View Details
 							</v-btn>
 						</td>
